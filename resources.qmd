@@ -5,8 +5,8 @@ title: "Resources"
 
 ## Pre-Doc Advice and Resources
 ::: {.callout-note }
-I'm happy that this is still useful 3+ years after I wrote it (while procrastinating writing my undergrad thesis). I periodically check to make sure that the links are not broken, but if you find I have missed one, feel free to email me and let me know. 
-Also, if there are websites I am missing that you found helpful when applying to predocs, let me know and I will add them! 
+I'm happy that this is still useful 4+ years after I wrote it (while procrastinating writing my undergrad thesis). I periodically check to make sure that the links are not broken, but if you find I have missed one, feel free to email me and let me know. 
+Also, if there are websites I am missing that you found helpful when applying to predocs, let me know and I will add them! I last updated this on 12/03/2025.
 :::
 
 Smarter people have already said a lot of what I think needs to be said. I've included a ton of links + some original advice below.
@@ -21,15 +21,17 @@ Smarter people have already said a lot of what I think needs to be said. I've in
 
 - [Predoc survey](https://z-y-huang.github.io/predoc_survey/slides.pdf): Useful statistics on the industry
 
-- I often get questions about learning how to code. There are many, many lessons online today, but I found [software carpentry](https://software-carpentry.org/lessons/) to be super helpful when I was learning almost ten years ago. Luckily it has stood the test of time and gotten even better for giving you a foundation in coding and reproducible analyses. [QuantEcon](https://quantecon.org/lectures/) has economics-specific lectures freely available as well and comes highly recommended. This [Stata guide](https://julianreif.com/guide/) also looks great. 
+- I often get questions about learning how to code. There are many, many lessons online today, but I found [software carpentry](https://software-carpentry.org/lessons/) to be super helpful when I was learning almost ten years ago. Luckily it has stood the test of time and gotten even better for giving you a foundation in coding and reproducible analyses. [QuantEcon](https://quantecon.org/lectures/) has economics-specific lectures freely available as well and comes highly recommended. This [Stata guide](https://julianreif.com/guide/) also looks great. (I'm sure this advice is horribly outdated in the age of AI but I still think there's a lot of utility in really understanding what you're doing and building an intuition on what how to problem solve.)
+
+- It's genuinely hard to say what the counterfactual would be if you did not do a predoc. I think seriously considering just applying to PhD programs from undergrad is almost always worth it; talk with your undergrad advisor and be realistic about how much doing a predoc will be able to help vs how much of it is just selection. Obviously someone who is hiring predocs has an interest in you doing a predoc so be sure to talk this over with trusted advisers who are not also your future boss.
 
 - If you have an offer, **talk to previous predocs of that PI** and ask about work hours, expectations, stress, & general environment. *This is two years of your life!!* Make sure that you are as informed as possible before making a decision. If someone wants to hire you, they should give you adequate time to decide and the contact info of former predocs on request and it would be a red flag if they did not. 
 
-  - What graduate programs did the previous predocs end up in? **Only take a position where you would be happy with the median placement of all former predocs.**
+  - What graduate programs did the previous predocs end up in? **Only take a position where you would be happy with the median placement of all recent former predocs.**
 
-  - How many hours a week did they work on average? 
+  - How many hours a week did they work on average? What kind of work do they do? What does a typical day look like?
 
-  - How reasonable did they feel like the deadlines were?
+  - How reasonable did they feel like the deadlines were? More generally how stressful was the environment?
 
   - How often did they meet with their PI to talk about their own research ideas, professional growth etc.?
 
@@ -45,7 +47,7 @@ Smarter people have already said a lot of what I think needs to be said. I've in
 
   - What are the norms around co-authorship with predocs? How will your work be recognized?
 
-    - The norms within econ don't match up with other fields. In some fields, it is the norm for RAs who contribute a significant amount of time to a project to become co-authors. In econ, this view is often discounted in favor of predocs remaining in the acknowledgments. Here are some interesting discussions of this phenomenon: [1](https://twitter.com/straightedge/status/1312636836771033089), [2](https://twitter.com/jonj/status/1354171126386208768)
+    - The norms within econ don't match up with other fields. In some fields, it is the norm for RAs who contribute a significant amount of time to a project to become co-authors. In econ, this view is often discounted in favor of predocs remaining in the acknowledgments. Here are some interesting discussions of this phenomenon: [1](https://twitter.com/straightedge/status/1312636836771033089), [2](https://twitter.com/jonj/status/1354171126386208768). My concern in this respect is that if there is some kind of falling out with a PI, you really only have the letter of rec as a proof of competence rather than a publication record, so it makes all of the above questions even more important prior to taking the position.
 
   - Ask if any of their friends have had a particularly good or bad experiences with certain professors.
 
@@ -62,7 +64,7 @@ Smarter people have already said a lot of what I think needs to be said. I've in
 
 - [Econ Job Market](https://econjobmarket.org/market) usually skews towards more international positions.
 
-- [Fed Econ Jobs](https://www.fedeconjobs.org/Branches/AllOpportunities.aspx) it's surprisingly hard to find this website on google, but it contains a lot of good information if you are interested in RA-ing at the Fed.
+- [Fed Econ Jobs](https://www.fedeconjobs.org/Locations/Jobs.aspx) it's surprisingly hard to find this website on google, but it contains a lot of good information if you are interested in RA-ing at the Fed.
 
 - There are certain programs that regularly hire some RAs. Here are a couple:
 
@@ -80,7 +82,7 @@ Smarter people have already said a lot of what I think needs to be said. I've in
 
   - [NYU Stern](https://www.stern.nyu.edu/programs-admissions/phd/academics/pre-doctoral-program)
 
-  - [Columbia Business School](https://business.columbia.edu/faculty-staff/research-resources/research-opportunities/predoctoral-fellows-program)
+  - [Columbia Business School](https://business.columbia.edu/research-resources/research-opportunities/predoctoral-staff-associates)
 
   - [Stanford GSB](https://www.gsb.stanford.edu/programs/research-fellows)
 
@@ -100,15 +102,12 @@ Smarter people have already said a lot of what I think needs to be said. I've in
 
   - [King Center, Stanford](https://kingcenter.stanford.edu/opportunities/prospective-predoctoral-research-fellows)
 
-  - Council of Economic Advisers
+  - Council of Economic Advisers 
 
   - [Consumer Financial Protection Bureau](https://www.consumerfinance.gov/about-us/careers/students-and-graduates/)
 
   - [DOJ Antitrust](https://www.justice.gov/atr/employment-opportunities-research-analysts)
 
-  - [Columbia Bridge to PhD](https://bridgetophd.facultydiversity.columbia.edu/)
-
-  - [Michigan Bridge to PhD](https://michiganross.umich.edu/programs/phd/bridges-program)
 
 ### My experience
 A little info on my timeline (I applied in the fall of 2021). I started applying to predocs in mid-September. I talked to current and former predocs through the end of September. I did my first coding task at the end of September, and I made my decision during the first half of October.
@@ -118,9 +117,9 @@ A little info on my timeline (I applied in the fall of 2021). I started applying
 
     - The stipend is deposited quarterly -- the beginning of work was in early July but most people in my cohort were paid for the first time on July 30th.
 
-    - I spent 1.05k on rent last year and now am spending 2.1k this year.
+    - I spent 1.05k on rent last year and during my second year I spent 2.1k for half of a 2b2.5br close to campus.
   
-  - [Health insurance](https://vaden.stanford.edu/insurance-referral-office/cardinal-care-overview-benefits) with SIEPR covering the premium. I find that I don't pay more than $20 for routine services and $100 for ER services. There is a hospital on-campus which is nice.
+  - [Health insurance](https://vaden.stanford.edu/insurance-referral-office/cardinal-care-overview-benefits) with SIEPR covering the premium. I found that I didn't pay more than $20 for routine services and $100 for ER services. There is a hospital on-campus which is nice.
 
   - One grad course per quarter at Stanford covered by SIEPR (excluding summer).
 
@@ -143,16 +142,18 @@ A little info on my timeline (I applied in the fall of 2021). I started applying
 
 ::: {.callout-note}
 ## My experience
-As a predoc, my hours varied based off of deadlines, but, in general, I worked 35-40 hours a week. My hours are pretty flexible, if I have a mid-afternoon slump, I can always take a break, go to the gym, and come back to finish work later. In the last year of my predoc, I met with my PI at least once, often more times per week and corresponded over email with him almost daily. My project management and econometric skills have vastly improved.
+As a predoc, my hours varied based off of deadlines, but, in general, I worked 35-40 hours a week. My hours were pretty flexible, if I had a mid-afternoon slump, I can always take a break, go to the gym, and come back to finish work later. In the last year of my predoc, I met with my PI at least once, often more times per week and corresponded over email with him almost daily. My project management and econometric skills vastly improved.
 
-I found balancing classes with work to be incredibly difficult --- much more difficult than I thought it would be --- I didn't have time outside of work and classes to do anything or work on my own ideas, and often felt like I didn't have enough time to fully appreciate what I was being taught in the courses. Going to class was also disruptive to my workflow. I didn't walk away with nothing; having the opportunity to take convex optimization with the professor who invented most of the field was particularly helpful in appraoching my PhD. Courses can also be useful for predocs who feel they lack sufficient math/core econ, but that was not my situation. In the end, when I didn't take courses in my second year, I felt much better applying to PhD applications, maintaining personal relationships, hobbies, etc. 
+I found balancing classes with work to be incredibly difficult --- much more difficult than I thought it would be --- I didn't have time outside of work and classes to do anything or work on my own ideas, and often felt like I didn't have enough time to fully appreciate what I was being taught in the courses. Going to class was also disruptive to my workflow. I didn't walk away with nothing; having the opportunity to take convex optimization with the professor who invented most of the field was particularly helpful in approaching my PhD. Courses can also be useful for predocs who feel they lack sufficient math/core econ, but that was not my situation. In the end, when I didn't take courses in my second year, I felt much better applying to PhD applications, maintaining personal relationships, hobbies, etc. 
 
 I ended up staying at Stanford for my PhD and I'm very happy with the level of support and mentorship that I have going into the PhD.
 :::
 
 ## Undergrad Advice
 
-- [Susan Athey's Advice](https://athey.people.stanford.edu/professional-advice)
+I was never someone who always thought I would do an econ PhD. I entered college thinking I would be a lawyer (which is why I went to Wellesley over an engineering college) and wanted to major in computer science and philosophy. Took some courses, realized that while philosophy was interesting, it felt quite deattached from reality. I also became less sure about my interest in all of the requirements of a computer science major. Slowly drifted towards econ as I enjoyed those courses the most, and sometime towards the end of my sophomore year and the beginning of my junior year I decided I would maybe start investing in the math I would need if I decided to do a PhD, which by the end of my time at Wellesley became a full blown math major. I also went to college during the pandemic and pre LLMs, so my experience has started to slowly drift away from the modal experience of undergrads today.
+
+- [Susan Athey's Advice](https://gsb-faculty.stanford.edu/susan-athey/professional-advice/)
 
 - [Alvin Christian's Advice](https://drive.google.com/file/d/1QozD6_4_bvMd2o-q-yh9Doc5aQ6i3nPV/view)
 
@@ -166,7 +167,7 @@ I ended up staying at Stanford for my PhD and I'm very happy with the level of s
 
 ## Applying to Economics PhDs
 
-I applied to PhD programs in Economics this past year (2023-2024). Here are a couple of pieces of advice that I have.  
+I applied to PhD programs in Economics in the AY 2023-2024. Here are a couple of pieces of advice that I have.  
 
 - Advice I found online on how to approach the personal statement is contradictory at best. Don't get too bogged down in this -- talk to your recommenders and see what they think is the best approach for you. 
 
@@ -186,7 +187,7 @@ I applied to PhD programs in Economics this past year (2023-2024). Here are a co
 
 - Apply to fellowships if you are eligible for them. They can help boost your application and provide you with better conditions as a PhD student. A couple that I can think of off the top of my head: 
 
-  - [NSF GRFP](https://www.nsfgrfp.org/applicants/applicant-eligibility/) (US citizens, nationals, or permanent residents)
+  - [NSF GRFP](https://www.nsfgrfp.org/) (US citizens, nationals, or permanent residents)
 
   - [PD Soros](https://www.pdsoros.org/apply/eligibilityu)
 
@@ -211,27 +212,25 @@ I applied to PhD programs in Economics this past year (2023-2024). Here are a co
 
   - [GitHub](https://missing.csail.mit.edu/2020/version-control/) to implement version control with your code.
  
-  - ChatGPT for troubleshooting code, writing Tikz diagrams, etc etc. (And GitHub CoPilot, [which is free for students](https://education.github.com/pack), for in-line code suggestions). 
+  - ChatGPT, Claude, Gemini, etc. for troubleshooting code, writing Tikz diagrams, etc etc. (And GitHub CoPilot, [which is free for students](https://education.github.com/pack), for in-line code suggestions). 
   
   - If you use [Overleaf](https://www.overleaf.com) set up Dropbox integration.
-
-    - I prefer [Texifier](https://www.texifier.com/) (better UI). Can edit documents through Dropbox so it also updates on Overleaf.
 
   - [Zotero](https://www.zotero.org/support/quick_start_guide) for citation management.
 
   - [GoodNotes](https://goodnotes.com/) (enable some kind of syncing so you don't risk losing your notes)
 
-  - I prefer the simplicity of [Obsidian](https://obsidian.md/) over [Notion](https://www.notion.so/)
-
   - [Libby](https://libbyapp.com) (app). Borrow free audiobooks from your library! Really nice UI.
 
-- Portable ergonomic equipment (good for hand/arm pain)
+- Ergonomic equipment; my arm, at times, struggles to keep up with how much I want to type, so I have invested a lot in this.
 
-  - [Nextstand](https://nexstand.io/) (h/t [Nic](https://njw.fish/))
+  - Good posture and a standing desk are the most important things for me.
 
-  - [Microsoft Sculpt](https://www.microsoft.com/en-us/d/microsoft-sculpt-ergonomic-desktop/8xk02kz6k69w?activetab=pivot:overviewtab) or [Kyria](https://splitkb.com/products/kyria-pcb-kit?variant=42433243218179)
+  - I use a [Dygma Defy 2](https://dygma.com/products/dygma-defy) which is the only split tented keyboard I've found that is not built for hands that are much larger than mine (I ruled out Ergodox, Voyager, Moonlander, Glove 80 (anyone who says this is built for small hands is lying), Kinesis, etc.). Most of my pain is elicited from overusing my right hand especially my pinky so this keyboard allows me to move all of those keys to my thumbs. For people who don't have these issues used to be partial towards the Microsoft Sculpt which I believe InCase now has the IP for.
 
-  - [Logitech MX Master 3](https://www.logitech.com/en-us/products/mice/mx-master-3.910-005647.html)
+  - I also use a forearm rest connected to my desk help support my arm. 
+  
+  - [Logitech MX Master 3](https://www.logitech.com/en-us/products/mice/mx-master-3.910-005647.html). Right now I use a Logitech MX Master Anywhere 3S mouse as a left handed mouse to alleviate overuse of my right hand.
 
 ## Coding & Data Visualization
 

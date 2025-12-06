@@ -5,7 +5,8 @@ title-block-banner-color: white
 ---
 Hi! Thanks for visiting my site. I've tried to compile some resources for students interested in pursuing economics as a predoc in my resources page. Here, I'll talk a little bit about myself. 
 
-I'm a PhD student at Stanford. When I'm not working, I bird- mushroom- plant- etc.- watch and appreciate the [biodiversity of California](https://www.cepf.net/our-work/biodiversity-hotspots/california-floristic-province)! I also powerlift (which I've been doing on and off for the past four years). 
+I'm a PhD student at Stanford. When I'm not working, I bird- mushroom- plant- etc.- watch and appreciate the [biodiversity of California](https://www.cepf.net/our-work/biodiversity-hotspots/california-floristic-province)!
+ 
 I also donate blood with the [Stanford Blood Center](https://sbcdonor.org/donor/schedules/zip) as often as I am eligible and would encourage anyone who is eligible to consider doing so as well. 
 Being a consistent donor can be especially helpful for patients who receive frequent blood transfusions and need a good match on antibodies outside of (A, B, O, Rh +/-). 
 

@@ -15,11 +15,14 @@ about:
     - icon: github
       text: Github
       href: https://github.com/zthab
+    - icon: goodreads
+      text: Goodreads
+      href: https://www.goodreads.com/user/show/143366475-zahra-thabet
 ---
 I'm an Economics Ph.D. student at Stanford University. 
 
 
-I'm broadly interested in IO and public economics.
+I'm broadly interested in IO, spatial, and environmental economics.
 
 [My C.V. is available here.](/zahra_thabet_cv.pdf) (and my CV template can be found [here](https://gabesekeres.com/cv.html))
 
