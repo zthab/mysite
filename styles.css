@@ -1,1 +1,906 @@
-/* css styles */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Apeles Mestres
+   Fine line drawings on quality paper
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Color Palette — Restrained, Letting the Art Speak
+   ───────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Paper - subtle warmth, not obviously "vintage" */
+  --ivory: #faf8f4;
+  --ivory-warm: #f5f2eb;
+  --ivory-muted: #ebe7de;
+
+  /* Ink - rich and present */
+  --ink: #262420;
+  --ink-soft: #3d3a35;
+  --ink-muted: #6b665d;
+
+  /* The single accent: an aged forest green
+     Evokes botanical specimens and old book cloth */
+  --forest: #324a3b;
+  --forest-light: #3d5a47;
+  --forest-bright: #5a8a6a;
+  --forest-pale: #8fa895;
+
+  /* Antique gold for subtle warmth (sparingly) */
+  --gold-antique: #c9a227;
+  --gold-muted: #a08620;
+
+  /* Functional tones */
+  --text-muted: #7a756c;
+  --border: #d4d0c6;
+  --border-dark: #b8b3a7;
+  --shadow-warm: rgba(38, 36, 32, 0.08);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dark Mode — Inverted palette, preserving the aesthetic
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  /* Paper becomes deep charcoal */
+  --ivory: #1a1918;
+  --ivory-warm: #242220;
+  --ivory-muted: #2e2c29;
+
+  /* Ink becomes soft cream */
+  --ink: #e8e4dc;
+  --ink-soft: #c9c4ba;
+  --ink-muted: #9a958c;
+
+  /* Forest green stays similar but brightened for contrast */
+  --forest: #5a9a6a;
+  --forest-light: #6aaa7a;
+  --forest-bright: #7aba8a;
+  --forest-pale: #4a7a5a;
+
+  /* Gold warms up in dark mode */
+  --gold-antique: #d4b237;
+  --gold-muted: #b89620;
+
+  /* Functional tones */
+  --text-muted: #8a857c;
+  --border: #3a3835;
+  --border-dark: #4a4744;
+  --shadow-warm: rgba(0, 0, 0, 0.3);
+}
+
+/* System preference detection */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Paper becomes deep charcoal */
+    --ivory: #1a1918;
+    --ivory-warm: #242220;
+    --ivory-muted: #2e2c29;
+
+    /* Ink becomes soft cream */
+    --ink: #e8e4dc;
+    --ink-soft: #c9c4ba;
+    --ink-muted: #9a958c;
+
+    /* Forest green stays similar but brightened for contrast */
+    --forest: #5a9a6a;
+    --forest-light: #6aaa7a;
+    --forest-bright: #7aba8a;
+    --forest-pale: #4a7a5a;
+
+    /* Gold warms up in dark mode */
+    --gold-antique: #d4b237;
+    --gold-muted: #b89620;
+
+    /* Functional tones */
+    --text-muted: #8a857c;
+    --border: #3a3835;
+    --border-dark: #4a4744;
+    --shadow-warm: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reset & Base
+   ───────────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--ivory);
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Typography
+   ───────────────────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--forest);
+  margin-top: 0.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+p {
+  margin-bottom: 1.1rem;
+}
+
+strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+em {
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Links — Brighter green for clear visibility
+   ───────────────────────────────────────────────────────────────────────────── */
+a {
+  color: var(--forest);
+  text-decoration: none;
+  background-image: linear-gradient(transparent 70%, #d8e5d6 70%, #d8e5d6 95%, transparent 95%);
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--forest);
+  background-image: linear-gradient(transparent 65%, var(--gold-antique) 65%, var(--gold-antique) 90%, transparent 90%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Navigation Header — Clean, minimal
+   ───────────────────────────────────────────────────────────────────────────── */
+.site-header {
+  text-align: center;
+  padding: 2rem 1rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.site-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.site-title a {
+  color: inherit;
+  background: none;
+}
+
+.site-title a:hover {
+  color: var(--forest);
+}
+
+.site-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1rem;
+  color: var(--text-muted);
+  background: none;
+  padding: 0.25rem 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--forest);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.site-nav a.active {
+  color: var(--ink);
+}
+
+.site-nav a.active::after {
+  transform: scaleX(1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Main Content Container
+   ───────────────────────────────────────────────────────────────────────────── */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Decorative Frame — Simple elegant corners outside content
+   ───────────────────────────────────────────────────────────────────────────── */
+.frame {
+  position: relative;
+  padding: 2.5rem 2rem;
+  margin: 2rem 0;
+  background: var(--ivory-warm);
+  border: 1px solid var(--border);
+}
+
+/* Corner marks positioned at the outer edge of frame */
+.frame::before,
+.frame::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--forest-pale);
+  border-style: solid;
+}
+
+.frame::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.frame::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+.frame-inner {
+  position: relative;
+}
+
+/* No inner pseudo-elements needed - keep it simple */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dividers — Botanical and celestial motifs
+   ───────────────────────────────────────────────────────────────────────────── */
+.divider-botanical,
+.divider-celestial,
+.divider-stars {
+  height: 50px;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.divider-botanical::before {
+  content: '';
+  width: 80px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 80 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 12 Q10 12 15 8 Q20 4 25 8 Q30 12 40 12 Q50 12 55 8 Q60 4 65 8 Q70 12 80 12' fill='none' stroke='%233d5a47' stroke-width='1'/%3E%3Ccircle cx='40' cy='12' r='2' fill='%233d5a47'/%3E%3Cellipse cx='25' cy='8' rx='3' ry='2' fill='none' stroke='%233d5a47' stroke-width='0.5'/%3E%3Cellipse cx='55' cy='8' rx='3' ry='2' fill='none' stroke='%233d5a47' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+}
+
+.divider-celestial::before {
+  content: '';
+  width: 60px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1' fill='%23c9a227'/%3E%3Ccircle cx='25' cy='8' r='0.8' fill='%23c9a227'/%3E%3Ccircle cx='30' cy='10' r='2' fill='%23c9a227'/%3E%3Ccircle cx='35' cy='12' r='0.8' fill='%23c9a227'/%3E%3Ccircle cx='50' cy='10' r='1' fill='%23c9a227'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.divider-stars::before {
+  content: '';
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-dark), transparent);
+}
+
+.divider-stars::after {
+  content: '·';
+  position: absolute;
+  color: var(--forest);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+hr {
+  border: none;
+  height: 30px;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+hr::before {
+  content: '';
+  width: 60px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Drop Caps
+   ───────────────────────────────────────────────────────────────────────────── */
+.drop-cap::first-letter {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 4.5rem;
+  font-weight: 600;
+  float: left;
+  line-height: 0.72;
+  margin-right: 0.6rem;
+  margin-top: 0.15rem;
+  color: var(--forest);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Home Page - Portal
+   ───────────────────────────────────────────────────────────────────────────── */
+.portal {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.portal-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+
+.portal-name::after {
+  display: none;
+}
+
+.portal-title {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+  font-style: italic;
+}
+
+.portal-bio {
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.portal-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.portal-links a {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--forest);
+  padding: 0.5rem 1.25rem;
+  background: transparent;
+  border: 1px solid var(--forest-pale);
+  transition: all 0.2s ease;
+}
+
+.portal-links a:hover {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--ivory);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Callout Boxes
+   ───────────────────────────────────────────────────────────────────────────── */
+.callout {
+  background: var(--ivory-warm);
+  border-left: 2px solid var(--forest);
+  margin: 2rem 0;
+  padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+}
+
+.callout-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Resources Page - Two Column Layout
+   ───────────────────────────────────────────────────────────────────────────── */
+.resources-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.sidebar {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.toc-wrapper {
+  background: var(--ivory-warm);
+  border: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+}
+
+.toc-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list li {
+  margin-bottom: 0.35rem;
+  padding-left: 0;
+}
+
+.toc-list > li::before {
+  content: none;
+}
+
+.toc-list a {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  background: none;
+  transition: color 0.2s ease;
+}
+
+.toc-list a:hover {
+  color: var(--forest);
+}
+
+.toc-footer {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.toc-footer::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--forest-pale);
+  border-radius: 50%;
+}
+
+.resources-content {
+  min-width: 0;
+}
+
+.resources-content h2:first-child {
+  margin-top: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Lists
+   ───────────────────────────────────────────────────────────────────────────── */
+ul {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin-bottom: 1.1rem;
+}
+
+ul > li {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+ul > li::before {
+  content: '–';
+  color: var(--forest-pale);
+  position: absolute;
+  left: -1.25rem;
+}
+
+ul ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ul ul > li::before {
+  content: '·';
+  color: var(--text-muted);
+}
+
+ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.1rem;
+}
+
+ol > li {
+  margin-bottom: 0.5rem;
+}
+
+ol > li::marker {
+  color: var(--forest);
+  font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Tables
+   ───────────────────────────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+th {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--forest);
+  color: var(--ink);
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tr:hover {
+  background-color: var(--ivory-warm);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Images & Figures
+   ───────────────────────────────────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+figure img {
+  border: 1px solid var(--border);
+}
+
+figcaption {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Footer
+   ───────────────────────────────────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+.footer-ornament {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 5 Q20 10 15 15 Q10 20 15 25' fill='none' stroke='%233d5a47' stroke-width='1'/%3E%3Ccircle cx='15' cy='15' r='2' fill='%233d5a47'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Blockquotes
+   ───────────────────────────────────────────────────────────────────────────── */
+blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 2px solid var(--forest-pale);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Code
+   ───────────────────────────────────────────────────────────────────────────── */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: var(--ink-soft);
+  background-color: var(--ivory-muted);
+  padding: 0.15em 0.35em;
+  border: 1px solid var(--border);
+}
+
+pre {
+  background: var(--ivory-muted);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Responsive Design
+   ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .site-title {
+    font-size: 1.15rem;
+    letter-spacing: 0.15em;
+  }
+
+  .site-nav {
+    gap: 1.25rem;
+  }
+
+  main {
+    padding: 2rem 1.25rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .portal-name {
+    font-size: 1.75rem;
+  }
+
+  .drop-cap::first-letter {
+    font-size: 3.5rem;
+  }
+
+  .frame {
+    padding: 2rem 1.5rem;
+  }
+
+  .frame::before,
+  .frame::after {
+    width: 16px;
+    height: 16px;
+  }
+
+  .resources-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .toc-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .toc-list li {
+    margin-bottom: 0;
+  }
+
+  .toc-footer {
+    display: none;
+  }
+
+  .portal-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .portal-links a {
+    width: 100%;
+    max-width: 180px;
+    text-align: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dark Mode Toggle Button
+   ───────────────────────────────────────────────────────────────────────────── */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  border-radius: 0;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--forest);
+}
+
+/* Dark mode specific link adjustments */
+[data-theme="dark"] a {
+  background-image: linear-gradient(transparent 70%, rgba(90, 154, 106, 0.3) 70%, rgba(90, 154, 106, 0.3) 95%, transparent 95%);
+}
+
+[data-theme="dark"] a:hover {
+  background-image: linear-gradient(transparent 65%, rgba(212, 178, 55, 0.4) 65%, rgba(212, 178, 55, 0.4) 90%, transparent 90%);
+}
+
+[data-theme="dark"] .site-nav a,
+[data-theme="dark"] .site-title a,
+[data-theme="dark"] .portal-links a,
+[data-theme="dark"] .toc-list a {
+  background: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) a {
+    background-image: linear-gradient(transparent 70%, rgba(90, 154, 106, 0.3) 70%, rgba(90, 154, 106, 0.3) 95%, transparent 95%);
+  }
+
+  :root:not([data-theme="light"]) a:hover {
+    background-image: linear-gradient(transparent 65%, rgba(212, 178, 55, 0.4) 65%, rgba(212, 178, 55, 0.4) 90%, transparent 90%);
+  }
+
+  :root:not([data-theme="light"]) .site-nav a,
+  :root:not([data-theme="light"]) .site-title a,
+  :root:not([data-theme="light"]) .portal-links a,
+  :root:not([data-theme="light"]) .toc-list a {
+    background: none;
+  }
+}
+
+/* SVG illustrations in dark mode - match --text-muted (#8a857c) */
+[data-theme="dark"] .illustration-frame img {
+  filter: invert(0.65) sepia(0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .illustration-frame img {
+    filter: invert(0.65) sepia(0.15);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Print Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+@media print {
+  body {
+    background: white;
+  }
+
+  .site-header,
+  .site-footer,
+  .sidebar {
+    display: none;
+  }
+
+  main {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  a {
+    color: var(--ink);
+    background: none;
+  }
+
+  .frame {
+    border: 1px solid #ccc;
+  }
+
+  .frame::before,
+  .frame::after {
+    display: none;
+  }
+}

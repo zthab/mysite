@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zahra Thabet</title>
+  <meta name="description" content="Zahra Thabet - Economics PhD student at Stanford University. Research interests in IO, spatial, and environmental economics.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+
+  <style>
+    /* Illustration styling */
+    .illustration-frame {
+      max-width: 320px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+    }
+
+    .illustration-frame img {
+      width: 100%;
+      height: auto;
+    }
+
+    .illustration-link {
+      background: none;
+      display: block;
+    }
+
+    .illustration-link:hover {
+      background: none;
+      opacity: 0.85;
+    }
+
+    /* iNaturalist Widget - minimal, elegant */
+    .currently-section {
+      margin-top: 3.5rem;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .curiosity-card {
+      text-align: center;
+    }
+
+    .curiosity-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      margin: 0 auto 1rem;
+      display: block;
+    }
+
+    .curiosity-label {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .info-tooltip {
+      position: relative;
+      cursor: help;
+    }
+
+    .info-tooltip::before {
+      content: '?';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      font-size: 0.65rem;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .info-tooltip::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ivory-warm);
+      color: var(--forest);
+      font-size: 0.75rem;
+      font-style: normal;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      box-shadow: 0 2px 8px var(--shadow-warm);
+    }
+
+    .info-tooltip:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .curiosity-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 0.2rem 0;
+      line-height: 1.3;
+    }
+
+    .curiosity-title a {
+      background: none;
+      color: var(--forest);
+    }
+
+    .curiosity-title a:hover {
+      color: var(--ink);
+    }
+
+    .curiosity-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .illustration-frame {
+        max-width: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title"><a href="index.html">Zahra Thabet</a></h1>
+      <nav class="site-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="resources.html">Resources</a>
+        <a href="zahra_thabet_cv.pdf">CV</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="portal">
+
+      <div class="illustration-frame">
+        <a href="https://en.wikipedia.org/wiki/Apel%C2%B7les_Mestres" target="_blank" rel="noopener" class="illustration-link">
+          <img src="Ilustración_de_Liliana_(1907),_de_Apeles_Mestres,_pg_92.svg" alt="Illustration by Apeles Mestres from Liliana (1907)">
+        </a>
+      </div>
+
+      <h2 class="portal-name">Zahra Thabet</h2>
+      <p class="portal-title">Economics PhD · Stanford University</p>
+
+      <p class="portal-bio">
+        I'm broadly interested in IO, spatial, and environmental economics.
+      </p>
+
+      <div class="portal-links">
+        <a href="zahra_thabet_cv.pdf">CV</a>
+        <a href="https://twitter.com/zahra_thab">Twitter</a>
+        <a href="https://linkedin.com/in/zthab">LinkedIn</a>
+        <a href="https://github.com/zthab">GitHub</a>
+      </div>
+
+      <div class="currently-section">
+        <div class="divider-stars"></div>
+
+        <!-- iNaturalist Recent Observation -->
+        <div class="curiosity-card" id="inaturalist-card">
+          <img class="curiosity-image" id="inat-image" src="" alt="">
+          <p class="curiosity-label">Recently observed <span class="info-tooltip" data-tip="Pulled from my iNaturalist"></span></p>
+          <p class="curiosity-title"><a href="" id="inat-link" target="_blank" rel="noopener"></a></p>
+          <p class="curiosity-meta" id="inat-meta"></p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-ornament"></div>
+  </footer>
+
+  <script>
+    // Fetch most recent iNaturalist observation and link to Wikipedia
+    async function fetchINaturalist() {
+      try {
+        const response = await fetch('https://api.inaturalist.org/v1/observations?user_login=zahra_thabet&order=desc&order_by=observed_on&per_page=1');
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+          const obs = data.results[0];
+          const taxon = obs.taxon;
+          const photo = obs.photos && obs.photos[0];
+
+          document.getElementById('inat-image').src = photo ? photo.url.replace('square', 'small') : '';
+          document.getElementById('inat-image').alt = taxon ? taxon.preferred_common_name || taxon.name : 'Observation';
+
+          const displayName = taxon ? (taxon.preferred_common_name || taxon.name) : 'Unknown species';
+          document.getElementById('inat-link').textContent = displayName;
+
+          // Link to Wikipedia using the scientific name (taxon.name)
+          const wikiName = taxon ? taxon.name.replace(/ /g, '_') : '';
+          document.getElementById('inat-link').href = wikiName ? `https://en.wikipedia.org/wiki/${wikiName}` : '#';
+
+          const location = obs.place_guess || '';
+          document.getElementById('inat-meta').textContent = location;
+        }
+      } catch (error) {
+        console.log('Could not fetch iNaturalist data:', error);
+        document.getElementById('inaturalist-card').style.display = 'none';
+      }
+    }
+
+    fetchINaturalist();
+  </script>
+
+  <script>
+    (function() {
+      const toggle = document.querySelector('.theme-toggle');
+
+      function updateIcon() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+          (!document.documentElement.getAttribute('data-theme') &&
+           window.matchMedia('(prefers-color-scheme: dark)').matches &&
+           document.documentElement.getAttribute('data-theme') !== 'light');
+        toggle.textContent = isDark ? '☀' : '☽';
+      }
+
+      toggle.addEventListener('click', function() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let newTheme;
+
+        if (current === 'dark' || (!current && prefersDark)) {
+          newTheme = 'light';
+        } else {
+          newTheme = 'dark';
+        }
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon();
+      });
+
+      updateIcon();
+    })();
+  </script>
+
+</body>
+</html>

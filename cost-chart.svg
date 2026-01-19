@@ -1,0 +1,50 @@
+<svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; font-weight: 600; fill: #262420; }
+    .label { font-family: 'EB Garamond', Georgia, serif; font-size: 13px; fill: #262420; }
+    .value { font-family: 'EB Garamond', Georgia, serif; font-size: 12px; fill: #6b665d; }
+  </style>
+
+  <!-- Title -->
+  <text x="250" y="40" text-anchor="middle" class="title">Cost of Applying to Economics PhD</text>
+
+  <!-- Pie slices - center (250,230), radius 120 -->
+  <path d="M250,230 L250,110 A120,120 0 1 1 224.8,347.3 Z" fill="#8fa895" stroke="#8fa895" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M250,230 L224.8,347.3 A120,120 0 0 1 131.7,250 Z" fill="#5a8a6a" stroke="#5a8a6a" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M250,230 L131.7,250 A120,120 0 0 1 185.5,128.8 Z" fill="#3d5a47" stroke="#3d5a47" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M250,230 L185.5,128.8 A120,120 0 0 1 222.7,113.2 Z" fill="#324a3b" stroke="#324a3b" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M250,230 L222.7,113.2 A120,120 0 0 1 250,110 Z" fill="#c9a227" stroke="#c9a227" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Labels - positioned at slice centers -->
+
+  <!-- Application Fees - center angle ~6°, right side going down -->
+  <line x1="340" y1="240" x2="400" y2="280" stroke="#6b665d" stroke-width="0.75"/>
+  <circle cx="340" cy="240" r="2" fill="#6b665d"/>
+  <text x="405" y="276" class="label">Application Fees</text>
+  <text x="405" y="292" class="value">($1,775)</text>
+
+  <!-- Sending GRE Scores - center angle ~136°, bottom left -->
+  <line x1="185" y1="295" x2="100" y2="340" stroke="#6b665d" stroke-width="0.75"/>
+  <circle cx="185" cy="295" r="2" fill="#6b665d"/>
+  <text x="10" y="350" class="label">Sending GRE Scores</text>
+  <text x="10" y="366" class="value">($630)</text>
+
+  <!-- GRE Registration - center angle ~204°, left side -->
+  <line x1="168" y1="194" x2="80" y2="175" stroke="#6b665d" stroke-width="0.75"/>
+  <circle cx="168" cy="194" r="2" fill="#6b665d"/>
+  <text x="5" y="160" class="label">GRE Registration,</text>
+  <text x="5" y="176" class="label">Date Changes</text>
+  <text x="5" y="192" class="value">($620)</text>
+
+  <!-- Magoosh - center angle ~247°, top left -->
+  <line x1="210" y1="150" x2="150" y2="100" stroke="#6b665d" stroke-width="0.75"/>
+  <circle cx="210" cy="150" r="2" fill="#6b665d"/>
+  <text x="100" y="90" class="label">Magoosh</text>
+  <text x="100" y="106" class="value">($179)</text>
+
+  <!-- Other - center angle ~263°, top -->
+  <line x1="238" y1="142" x2="285" y2="90" stroke="#6b665d" stroke-width="0.75"/>
+  <circle cx="238" cy="142" r="2" fill="#6b665d"/>
+  <text x="290" y="86" class="label">Other</text>
+  <text x="290" y="102" class="value">($122)</text>
+</svg>

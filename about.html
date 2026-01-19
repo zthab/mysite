@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About · Zahra Thabet</title>
+  <meta name="description" content="About Zahra Thabet - Economics PhD student at Stanford University.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title"><a href="index.html">Zahra Thabet</a></h1>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="resources.html">Resources</a>
+        <a href="zahra_thabet_cv.pdf">CV</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="frame">
+      <div class="frame-inner">
+
+        <p class="drop-cap">I am an Economics PhD Student at Stanford University supported by the NSF Graduate Research Fellowship. My research interests span industrial organization, spatial economics, and environmental economics. I hold a B.A. in Economics and Mathematics from Wellesley College.</p>
+
+        <h2>Beyond Research</h2>
+
+        <p>Outside of academia, I enjoy exploring the <a href="https://www.cepf.net/our-work/biodiversity-hotspots/california-floristic-province">biodiversity of California</a> through birding and native plant identification.</p>
+
+        <p>I also donate blood regularly with the <a href="https://sbcdonor.org/donor/schedules/zip">Stanford Blood Center</a>. Consistent donors are especially valuable for patients who require frequent transfusions and need matched antibody profiles.</p>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-ornament"></div>
+  </footer>
+
+  <script>
+    (function() {
+      const toggle = document.querySelector('.theme-toggle');
+
+      function updateIcon() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+          (!document.documentElement.getAttribute('data-theme') &&
+           window.matchMedia('(prefers-color-scheme: dark)').matches &&
+           document.documentElement.getAttribute('data-theme') !== 'light');
+        toggle.textContent = isDark ? '☀' : '☽';
+      }
+
+      toggle.addEventListener('click', function() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let newTheme;
+
+        if (current === 'dark' || (!current && prefersDark)) {
+          newTheme = 'light';
+        } else {
+          newTheme = 'dark';
+        }
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon();
+      });
+
+      updateIcon();
+    })();
+  </script>
+
+</body>
+</html>
