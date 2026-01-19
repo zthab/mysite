@@ -229,10 +229,10 @@
           const wikiName = taxon ? taxon.name.replace(/ /g, '_') : '';
           document.getElementById('inat-link').href = wikiName ? `https://en.wikipedia.org/wiki/${wikiName}` : '#';
 
-          // Only show town/region and country, not street address
+          // Only show city/region and country, not street address
           const fullLocation = obs.place_guess || '';
           const parts = fullLocation.split(',').map(p => p.trim());
-          const location = parts.length > 2 ? parts.slice(-2).join(', ') : fullLocation;
+          const location = parts.length > 3 ? parts.slice(-3).join(', ') : fullLocation;
           document.getElementById('inat-meta').textContent = location;
         }
       } catch (error) {
