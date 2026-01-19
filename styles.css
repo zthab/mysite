@@ -36,68 +36,6 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Dark Mode — Inverted palette, preserving the aesthetic
-   ───────────────────────────────────────────────────────────────────────────── */
-[data-theme="dark"] {
-  /* Paper becomes deep charcoal */
-  --ivory: #1a1918;
-  --ivory-warm: #242220;
-  --ivory-muted: #2e2c29;
-
-  /* Ink becomes soft cream */
-  --ink: #e8e4dc;
-  --ink-soft: #c9c4ba;
-  --ink-muted: #9a958c;
-
-  /* Forest green stays similar but brightened for contrast */
-  --forest: #5a9a6a;
-  --forest-light: #6aaa7a;
-  --forest-bright: #7aba8a;
-  --forest-pale: #4a7a5a;
-
-  /* Gold warms up in dark mode */
-  --gold-antique: #d4b237;
-  --gold-muted: #b89620;
-
-  /* Functional tones */
-  --text-muted: #8a857c;
-  --border: #3a3835;
-  --border-dark: #4a4744;
-  --shadow-warm: rgba(0, 0, 0, 0.3);
-}
-
-/* System preference detection */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    /* Paper becomes deep charcoal */
-    --ivory: #1a1918;
-    --ivory-warm: #242220;
-    --ivory-muted: #2e2c29;
-
-    /* Ink becomes soft cream */
-    --ink: #e8e4dc;
-    --ink-soft: #c9c4ba;
-    --ink-muted: #9a958c;
-
-    /* Forest green stays similar but brightened for contrast */
-    --forest: #5a9a6a;
-    --forest-light: #6aaa7a;
-    --forest-bright: #7aba8a;
-    --forest-pale: #4a7a5a;
-
-    /* Gold warms up in dark mode */
-    --gold-antique: #d4b237;
-    --gold-muted: #b89620;
-
-    /* Functional tones */
-    --text-muted: #8a857c;
-    --border: #3a3835;
-    --border-dark: #4a4744;
-    --shadow-warm: rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
    Reset & Base
    ───────────────────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
@@ -804,70 +742,6 @@ pre code {
     width: 100%;
     max-width: 180px;
     text-align: center;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   Dark Mode Toggle Button
-   ───────────────────────────────────────────────────────────────────────────── */
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  padding: 0.4rem 0.6rem;
-  font-size: 1rem;
-  color: var(--text-muted);
-  transition: all 0.2s ease;
-  border-radius: 0;
-  line-height: 1;
-}
-
-.theme-toggle:hover {
-  color: var(--ink);
-  border-color: var(--forest);
-}
-
-/* Dark mode specific link adjustments */
-[data-theme="dark"] a {
-  background-image: linear-gradient(transparent 70%, rgba(90, 154, 106, 0.3) 70%, rgba(90, 154, 106, 0.3) 95%, transparent 95%);
-}
-
-[data-theme="dark"] a:hover {
-  background-image: linear-gradient(transparent 65%, rgba(212, 178, 55, 0.4) 65%, rgba(212, 178, 55, 0.4) 90%, transparent 90%);
-}
-
-[data-theme="dark"] .site-nav a,
-[data-theme="dark"] .site-title a,
-[data-theme="dark"] .portal-links a,
-[data-theme="dark"] .toc-list a {
-  background: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) a {
-    background-image: linear-gradient(transparent 70%, rgba(90, 154, 106, 0.3) 70%, rgba(90, 154, 106, 0.3) 95%, transparent 95%);
-  }
-
-  :root:not([data-theme="light"]) a:hover {
-    background-image: linear-gradient(transparent 65%, rgba(212, 178, 55, 0.4) 65%, rgba(212, 178, 55, 0.4) 90%, transparent 90%);
-  }
-
-  :root:not([data-theme="light"]) .site-nav a,
-  :root:not([data-theme="light"]) .site-title a,
-  :root:not([data-theme="light"]) .portal-links a,
-  :root:not([data-theme="light"]) .toc-list a {
-    background: none;
-  }
-}
-
-/* SVG illustrations in dark mode - match --text-muted (#8a857c) */
-[data-theme="dark"] .illustration-frame img {
-  filter: invert(0.65) sepia(0.15);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .illustration-frame img {
-    filter: invert(0.65) sepia(0.15);
   }
 }
 
