@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life List · Zahra Thabet</title>
+  <meta name="description" content="A visual life list of bird and fungi species observed on iNaturalist">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="wide-page">
+
+  <header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title"><a href="index.html">Zahra Thabet</a></h1>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resources.html">Resources</a>
+        <a href="zahra_thabet_cv.pdf">CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="birds-page">
+      <h2>Life List</h2>
+      <p class="birds-subtitle">Each cell is a species found in the United States.</p>
+
+      <p class="viz-loading" id="viz-loading">Loading species data&hellip;</p>
+
+      <div class="viz-pair" id="viz-pair">
+        <div class="viz-column">
+          <h3 class="viz-heading">Birds</h3>
+          <p class="viz-count" id="bird-count"></p>
+          <div class="viz-container">
+            <svg id="egg-viz" class="viz-svg" role="img" aria-label="Egg-shaped visualization of bird species"></svg>
+          </div>
+        </div>
+
+        <div class="viz-column">
+          <h3 class="viz-heading">Fungi</h3>
+          <p class="viz-count" id="fungi-count"></p>
+          <div class="viz-container">
+            <svg id="mushroom-viz" class="viz-svg" role="img" aria-label="Mushroom-shaped visualization of fungi species"></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-legend">
+        <span class="legend-item"><span class="legend-swatch legend-seen"></span> Observed</span>
+        <span class="legend-item"><span class="legend-swatch legend-unseen"></span> Not yet seen</span>
+      </div>
+
+      <p class="birds-source">Data from iNaturalist</p>
+    </div>
+  </main>
+
+  <div class="egg-tooltip" id="viz-tooltip"></div>
+
+  <footer class="site-footer">
+    <div class="footer-ornament"></div>
+  </footer>
+
+<script>
+(async function () {
+  /* ── Config ─────────────────────────────────────────── */
+  const BR     = 3;
+  const GAP    = 1.5;
+  const PX     = 2 * BR + GAP;
+  const PY     = PX * Math.sqrt(3) / 2;
+  const MARGIN = 10;
+  const USER   = 'zahra_thabet';
+
+  const BIRD_PALETTE = [
+    '#8B7355','#5B8C7A','#C47868','#6888A8',
+    '#9A9440','#8E6E9E','#4E9E7E','#8B8B55',
+    '#B89070','#5E85AE','#6EAE90','#AB6868',
+    '#608890','#B0A060','#707070','#4B8B8B',
+    '#8B7060','#6B9B6B','#A07858','#7878A0',
+    '#58A088','#B88068','#608898','#7B9850',
+    '#A86858','#5BAB58','#7878A0'
+  ];
+
+  const FUNGI_PALETTE = [
+    '#8B6B4A','#6B8E5A','#B8860B','#8B5E3C',
+    '#6B7B3A','#A0785A','#5B7B5B','#9B7B5B',
+    '#7B6B8B','#5B8B7B','#AB7B4B','#6B6B4B',
+    '#8B6B6B','#4B7B6B','#9B8B5B','#7B5B4B'
+  ];
+
+  const BIRD_TAX_SEQ = [
+    'Struthioniformes','Anseriformes','Galliformes',
+    'Phoenicopteriformes','Podicipediformes','Columbiformes',
+    'Cuculiformes','Caprimulgiformes','Nyctibiiformes',
+    'Apodiformes','Gruiformes','Charadriiformes',
+    'Gaviiformes','Procellariiformes','Ciconiiformes',
+    'Suliformes','Pelecaniformes','Cathartiformes',
+    'Accipitriformes','Strigiformes','Trogoniformes',
+    'Bucerotiformes','Coraciiformes','Piciformes',
+    'Falconiformes','Psittaciformes','Passeriformes'
+  ];
+
+  const BIRD_LABELS = {
+    'Anseriformes':'Waterfowl','Galliformes':'Landfowl',
+    'Columbiformes':'Doves & Pigeons',
+    'Apodiformes':'Swifts & Hummingbirds',
+    'Gruiformes':'Rails & Cranes','Charadriiformes':'Shorebirds',
+    'Procellariiformes':'Tubenoses','Suliformes':'Cormorants',
+    'Pelecaniformes':'Herons & Allies','Cathartiformes':'Vultures',
+    'Accipitriformes':'Raptors','Strigiformes':'Owls',
+    'Piciformes':'Woodpeckers','Falconiformes':'Falcons',
+    'Psittaciformes':'Parrots','Passeriformes':'Songbirds'
+  };
+
+  const FUNGI_LABELS = {
+    'Agaricales':'Gilled Mushrooms','Polyporales':'Shelf Fungi',
+    'Boletales':'Boletes','Russulales':'Brittlegills',
+    'Pezizales':'Cup Fungi','Cantharellales':'Chanterelles',
+    'Hypocreales':'Flask Fungi','Xylariales':'Carbon Balls',
+    'Tremellales':'Jelly Fungi','Phallales':'Stinkhorns',
+    'Auriculariales':'Ear Fungi','Gomphales':'Coral Fungi',
+    'Helotiales':'Cup Discs','Dacrymycetales':'Jelly Drops'
+  };
+
+  const TAXO_TTL = 30*24*3600000;
+  const USER_TTL = 24*3600000;
+
+  /* ── DOM ────────────────────────────────────────────── */
+  const tip       = document.getElementById('viz-tooltip');
+  const loadingEl = document.getElementById('viz-loading');
+
+  /* ── Helpers ────────────────────────────────────────── */
+  function cached(key, ttl) {
+    try { const c = JSON.parse(localStorage.getItem(key));
+      if (c && Date.now() - c.ts < ttl) return c.data;
+    } catch(e) {} return null;
+  }
+  function cache(key, data) {
+    try { localStorage.setItem(key, JSON.stringify({data, ts: Date.now()})); } catch(e) {}
+  }
+  function svgEl(tag, attrs) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+    return el;
+  }
+
+  /* ── Shapes ─────────────────────────────────────────── */
+  function eggR(t, R) {
+    const c = 0.55;
+    if (t <= 0 || t >= 1) return 0;
+    if (t <= c) {
+      const u = 1 - t / c;
+      return R * Math.sqrt(1 - u * u);
+    } else {
+      const u = (t - c) / (1 - c);
+      return R * Math.cbrt(1 - u * u * u);
+    }
+  }
+
+  function mushroomR(t, R) {
+    const capEnd  = 0.38;
+    const transEnd = 0.45;
+    const stemR   = R * 0.24;
+    if (t <= 0) return 0;
+    if (t <= capEnd) {
+      const u = t / capEnd;
+      return R * Math.sqrt(u * (2 - u));   // semicircular dome
+    } else if (t <= transEnd) {
+      const u = (t - capEnd) / (transEnd - capEnd);
+      const s = u * u * (3 - 2 * u);       // smoothstep
+      return R + (stemR - R) * s;
+    } else if (t < 0.97) {
+      return stemR;
+    } else {
+      const u = (t - 0.97) / 0.03;
+      return stemR * Math.cos(u * Math.PI / 2);  // rounded base
+    }
+  }
+
+  /* ── Generic hex grid within any shape ──────────────── */
+  function countPositions(shapeFn, R, hRatio) {
+    const H = R * hRatio;
+    let count = 0;
+    for (let rowNum = 0; ; rowNum++) {
+      const y = rowNum * PY;
+      if (y >= H) break;
+      const halfW = shapeFn(y / H, R);
+      if (halfW < BR + 1) continue;
+      const usable = halfW - BR;
+      const shift = (rowNum % 2) ? PX / 2 : 0;
+      const nMin = Math.ceil((-usable - shift) / PX);
+      const nMax = Math.floor((usable - shift) / PX);
+      if (nMax >= nMin) count += nMax - nMin + 1;
+    }
+    return count;
+  }
+
+  function hexGrid(shapeFn, R, hRatio) {
+    const H = R * hRatio;
+    const positions = [];
+    for (let rowNum = 0; ; rowNum++) {
+      const y = rowNum * PY;
+      if (y >= H) break;
+      const halfW = shapeFn(y / H, R);
+      if (halfW < BR + 1) continue;
+      const usable = halfW - BR;
+      const shift = (rowNum % 2) ? PX / 2 : 0;
+      const nMin = Math.ceil((-usable - shift) / PX);
+      const nMax = Math.floor((usable - shift) / PX);
+      if (nMax < nMin) continue;
+      for (let n = nMin; n <= nMax; n++) {
+        positions.push({ x: shift + n * PX, y, row: rowNum });
+      }
+    }
+    positions.sort((a, b) => a.y - b.y || a.x - b.x);
+    return { positions, H };
+  }
+
+  function findR(shapeFn, totalSpecies, hRatio) {
+    for (let R = 30; R <= 500; R++) {
+      if (countPositions(shapeFn, R, hRatio) >= totalSpecies) return R;
+    }
+    return 300;
+  }
+
+  function shapePath(shapeFn, cx, H, R) {
+    const pts = [], N = 200;
+    for (let i = 0; i <= N; i++) { const t=i/N; pts.push([cx+shapeFn(t,R), t*H]); }
+    for (let i = N; i >= 0; i--) { const t=i/N; pts.push([cx-shapeFn(t,R), t*H]); }
+    return 'M'+pts.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join('L')+'Z';
+  }
+
+  /* ── Data fetching ──────────────────────────────────── */
+  async function fetchTaxonomy(ancestorId, iconicTaxa, cacheKey) {
+    let data = cached(cacheKey, TAXO_TTL);
+    if (data) return data;
+    const [ordRes,s1Res,s2Res] = await Promise.all([
+      fetch(`https://api.inaturalist.org/v1/taxa?rank=order&ancestor_ids=${ancestorId}&per_page=200`),
+      fetch(`https://api.inaturalist.org/v1/observations/species_counts?place_id=1&iconic_taxa=${iconicTaxa}&per_page=500&page=1`),
+      fetch(`https://api.inaturalist.org/v1/observations/species_counts?place_id=1&iconic_taxa=${iconicTaxa}&per_page=500&page=2`)
+    ]);
+    const [ordData,s1,s2] = await Promise.all([ordRes.json(),s1Res.json(),s2Res.json()]);
+    const orderMap = {};
+    (ordData.results||[]).forEach(t => {
+      orderMap[t.id] = { name: t.name, common: t.preferred_common_name || t.name };
+    });
+    const orderIds = new Set(Object.keys(orderMap).map(Number));
+    const raw = [...(s1.results||[]),...(s2.results||[])];
+    const species = [];
+    for (const r of raw) {
+      const t = r.taxon;
+      if (!t||!t.ancestor_ids) continue;
+      let oid = null;
+      for (const a of t.ancestor_ids) { if (orderIds.has(a)) oid = a; }
+      if (!oid) continue;
+      species.push({ id:t.id, name:t.preferred_common_name||t.name,
+        sci:t.name, oid, oname:orderMap[oid].name, ocommon:orderMap[oid].common });
+    }
+    data = { species, orderIds:[...orderIds], orderMap };
+    cache(cacheKey, data); return data;
+  }
+
+  async function fetchUser(iconicTaxa, cacheKey) {
+    let data = cached(cacheKey, USER_TTL);
+    if (data) return data;
+    const res = await fetch(
+      `https://api.inaturalist.org/v1/observations/species_counts?user_login=${USER}&iconic_taxa=${iconicTaxa}&per_page=200`);
+    const json = await res.json();
+    data = (json.results||[]).filter(r=>r.taxon).map(r=>r.taxon.id);
+    cache(cacheKey, data); return data;
+  }
+
+  function prepareSpecies(taxo, userIds, taxSeq) {
+    const seen = new Set(userIds);
+    const species = taxo.species.map(s => ({...s, seen: seen.has(s.id)}));
+    if (taxSeq) {
+      species.sort((a,b) => {
+        const ai=taxSeq.indexOf(a.oname), bi=taxSeq.indexOf(b.oname);
+        return (ai>=0?ai:98) - (bi>=0?bi:98) || a.id - b.id;
+      });
+    } else {
+      const oCounts = {};
+      species.forEach(s => { oCounts[s.oname] = (oCounts[s.oname]||0)+1; });
+      species.sort((a,b) =>
+        (oCounts[b.oname]-oCounts[a.oname]) || a.oname.localeCompare(b.oname) || a.id-b.id);
+    }
+    return { species, seenCount: species.filter(s=>s.seen).length };
+  }
+
+  /* ── Render a visualization ─────────────────────────── */
+  function renderViz(svgElement, shapeFn, species, hRatio, palette, taxSeq, labelNames) {
+    const groups = [];
+    let curOid = null;
+    for (const sp of species) {
+      if (sp.oid !== curOid) {
+        const ci = taxSeq ? taxSeq.indexOf(sp.oname) : groups.length;
+        groups.push({
+          oid: sp.oid, oname: sp.oname, ocommon: sp.ocommon,
+          species: [], color: palette[(ci>=0?ci:groups.length) % palette.length]
+        });
+        curOid = sp.oid;
+      }
+      groups[groups.length-1].species.push(sp);
+    }
+
+    const R = findR(shapeFn, species.length, hRatio);
+    const { positions, H } = hexGrid(shapeFn, R, hRatio);
+
+    /* Place species */
+    const placements = [];
+    let pi = 0;
+    for (const g of groups) {
+      for (const sp of g.species) {
+        if (pi >= positions.length) break;
+        placements.push({ x: positions[pi].x, y: positions[pi].y, sp, color: g.color });
+        pi++;
+      }
+    }
+
+    /* SVG */
+    const cx = MARGIN + R;
+    const W = cx * 2;
+    const svgH = H + 8;
+    svgElement.setAttribute('viewBox', `0 0 ${W} ${svgH}`);
+
+    const d = shapePath(shapeFn, cx, H, R);
+    svgElement.appendChild(svgEl('path', { d, fill:'#f5f2eb', stroke:'none' }));
+
+    const clipId = 'clip-' + svgElement.id;
+    const defs = svgEl('defs', {});
+    const clip = svgEl('clipPath', { id: clipId });
+    clip.appendChild(svgEl('path', { d }));
+    defs.appendChild(clip);
+    svgElement.appendChild(defs);
+
+    const cg = svgEl('g', { 'clip-path':`url(#${clipId})` });
+    svgElement.appendChild(cg);
+
+    for (const p of placements) {
+      cg.appendChild(svgEl('circle', {
+        cx: cx+p.x, cy: p.y, r: BR,
+        fill: p.color, opacity: p.sp.seen ? 0.88 : 0.25
+      }));
+    }
+
+    for (let i = placements.length; i < positions.length; i++) {
+      cg.appendChild(svgEl('circle', {
+        cx: cx+positions[i].x, cy: positions[i].y, r: BR,
+        fill: '#d5d0c8', opacity: 0.18
+      }));
+    }
+
+    svgElement.appendChild(svgEl('path', {
+      d, fill:'none', stroke:'#c5c0b6', 'stroke-width':'0.8'
+    }));
+
+    const circles = cg.querySelectorAll('circle');
+    for (let i = 0; i < placements.length; i++) {
+      const p = placements[i];
+      circles[i].addEventListener('mouseenter', e => showTip(e, p.sp, p.color, labelNames));
+      circles[i].addEventListener('mouseleave', hideTip);
+    }
+  }
+
+  /* ── Tooltip ────────────────────────────────────────── */
+  function showTip(e, sp, color, labelNames) {
+    const s = sp.seen
+      ? '<span style="color:#324a3b">&#10003; Observed</span>'
+      : '<span style="color:#7a756c">Not yet seen</span>';
+    const orderLabel = (labelNames && labelNames[sp.oname]) || sp.ocommon;
+    tip.innerHTML =
+      '<div class="tip-order-header"><span class="tip-dot" style="background:'+color+'"></span>' +
+      orderLabel + '</div>' +
+      '<strong>'+sp.name+'</strong><br><em>'+sp.sci+'</em><br>'+s;
+    tip.style.display = 'block'; moveTip(e);
+  }
+  function moveTip(e) {
+    let x=e.clientX+14, y=e.clientY-14;
+    if (x+220>window.innerWidth) x=e.clientX-234;
+    if (y+90>window.innerHeight) y=e.clientY-90;
+    if (y<0) y=14;
+    tip.style.left=x+'px'; tip.style.top=y+'px';
+  }
+  function hideTip() { tip.style.display='none'; }
+  document.addEventListener('mousemove', e => {
+    if (tip.style.display==='block') moveTip(e);
+  });
+
+  /* ── Init ───────────────────────────────────────────── */
+  try {
+    const [birdTaxo, fungiTaxo, birdUser, fungiUser] = await Promise.all([
+      fetchTaxonomy(3, 'Aves', 'bird_taxo_v6'),
+      fetchTaxonomy(47170, 'Fungi', 'fungi_taxo_v1'),
+      fetchUser('Aves', 'bird_user_v6'),
+      fetchUser('Fungi', 'fungi_user_v1')
+    ]);
+
+    const birdData  = prepareSpecies(birdTaxo, birdUser, BIRD_TAX_SEQ);
+    const fungiData = prepareSpecies(fungiTaxo, fungiUser, null);
+
+    loadingEl.style.display = 'none';
+
+    document.getElementById('bird-count').innerHTML =
+      '<strong>'+birdData.seenCount+'</strong> of '+birdData.species.length+' observed';
+    document.getElementById('fungi-count').innerHTML =
+      '<strong>'+fungiData.seenCount+'</strong> of '+fungiData.species.length+' observed';
+
+    renderViz(
+      document.getElementById('egg-viz'),
+      eggR, birdData.species, 2.5,
+      BIRD_PALETTE, BIRD_TAX_SEQ, BIRD_LABELS
+    );
+    renderViz(
+      document.getElementById('mushroom-viz'),
+      mushroomR, fungiData.species, 2.5,
+      FUNGI_PALETTE, null, FUNGI_LABELS
+    );
+  } catch(err) {
+    console.error('Viz error:', err);
+    loadingEl.textContent = 'Could not load species data. Try refreshing.';
+  }
+})();
+</script>
+
+</body>
+</html>
