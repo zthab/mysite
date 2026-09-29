@@ -15,8 +15,8 @@
   <!-- Fonts (non-render-blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
@@ -124,7 +124,9 @@
 <div class="figure-actions"><button id="zero-correlation" type="button">Set correlation to 0</button><button id="restore-correlation" type="button" disabled>Set to previous correlation</button></div>
 <p id="zero-correlation-status" class="small" aria-live="polite"></p>
 </li>
-<li><p class="explanation" id="zero-effect-title"><strong>Does omitting a variable that is correlated with <span data-tex="X"></span> but has no direct effect on <span data-tex="Y"></span>, holding <span data-tex="X"></span> fixed, violate unconfoundedness?</strong></p></li>
+<li><p class="explanation" id="zero-effect-title"><strong>Does omitting a variable that is correlated with <span data-tex="X"></span> but has no direct effect on <span data-tex="Y"></span>, holding <span data-tex="X"></span> fixed, violate unconfoundedness?</strong></p>
+<div class="figure-actions"><button id="zero-sleep-coefficient" type="button" aria-label="Set sleep coefficient to 0">Set <span data-tex="\beta_2 = 0"></span></button></div>
+</li>
 <li><p class="explanation" id="unbiasedness-nuance-title"><strong>Can the OLS slope estimator be unbiased for the causal study effect even when conditional exogeneity fails?</strong></p></li>
 </ol>
 </section>

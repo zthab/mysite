@@ -59,6 +59,7 @@ function update(){result=simulate(state);render();}
 $('rho').oninput=e=>{setCorrelation(+e.target.value);update();};
 $('b2').oninput=e=>{state.b2=+e.target.value;update();};
 $('zero-correlation').onclick=()=>{setCorrelation(0);update();};
+$('zero-sleep-coefficient').onclick=()=>{state.b2=0;update();};
 $('restore-correlation').onclick=()=>{if(state.rho===0&&previousCorrelation!==null){setCorrelation(previousCorrelation);update();}};
 $('resample').onclick=()=>{state.seed++;update();};
 $('random-student').onclick=()=>{state.selected=(state.selected+1+Math.floor(Math.random()*(result.data.length-1)))%result.data.length;updateSelection();draw();};
