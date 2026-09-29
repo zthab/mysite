@@ -1106,3 +1106,9 @@ pre code {
     max-width: 100%;
   }
 }
+
+/* Teaching */
+.teaching-page > h2 { margin-top: 0; }
+.teaching-material { margin-top: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.teaching-material h3 { margin: 0 0 0.75rem; font-size: 1.5rem; }
+.teaching-material p { margin: 0; }

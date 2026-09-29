@@ -1,0 +1,120 @@
+/* The lesson inherits the site's paper, ink, Garamond, and forest-green theme. */
+.ovb-lesson {
+  max-width: 1160px;
+  min-width: 0;
+  padding: 2.5rem 2rem;
+}
+.ovb-lesson .lesson-back { margin: 0 0 1rem; font-size: 0.9rem; }
+.ovb-lesson > h1 { margin: 0 0 1.5rem; }
+.ovb-lesson .lesson-section { padding: 1.75rem 0; border-bottom: 1px solid var(--border); }
+.ovb-lesson h2 { margin: 0 0 1.25rem; font-size: 1.55rem; }
+.ovb-lesson h3 { margin: 0 0 0.5rem; }
+.ovb-lesson .explanation { max-width: 65ch; margin: 1rem 0; }
+.ovb-lesson .small { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
+.ovb-lesson .math { min-width: 0; max-width: 100%; overflow-x: auto; white-space: nowrap; line-height: 2; padding: 0.6rem 0; font-size: 1rem; }
+.ovb-lesson .model-row { display: grid; grid-template-columns: 155px minmax(0,1fr); align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.ovb-lesson .model-row > span { font-size: 0.875rem; color: var(--ink-muted); }
+.ovb-lesson .model-row .math { padding: 0.25rem 0; }
+.ovb-lesson .model-with-note { display: grid; grid-template-columns: minmax(0,1fr) 210px; gap: 1.4rem; align-items: center; }
+.ovb-lesson .model-with-note .model-row { grid-template-columns: 135px minmax(0,1fr); }
+.ovb-lesson .margin-note { font-size: 0.875rem; line-height: 1.6; color: var(--ink-muted); border-left: 2px solid var(--border); padding-left: 0.8rem; }
+.ovb-lesson .margin-note .math { font-size: 0.8rem; padding: 0.4rem 0 0; }
+.ovb-lesson button, .ovb-lesson input { font: inherit; }
+.ovb-lesson button { cursor: pointer; background: var(--ivory); color: var(--forest); border: 1px solid var(--border-dark); border-radius: 3px; padding: 0.45rem 0.75rem; min-height: 44px; font-size: 0.875rem; line-height: 1.4; }
+.ovb-lesson button:hover { background: var(--ivory-muted); }
+.ovb-lesson button[aria-pressed="true"] { background: var(--forest); border-color: var(--forest); color: var(--ivory); }
+.ovb-lesson :is(button,input,canvas,a,summary):focus-visible { outline: 3px solid var(--gold-antique); outline-offset: 3px; }
+.ovb-lesson button:disabled { opacity: 0.5; cursor: default; }
+.ovb-lesson button:disabled:hover { background: var(--ivory); }
+.ovb-lesson input[type="range"] { accent-color: var(--forest); width: 100%; margin: 0.5rem 0 0; min-height: 24px; }
+.ovb-lesson .simulation-controls { max-width: 680px; background: var(--ivory-warm); border: 1px solid var(--border); padding: 1rem 1.2rem; margin: 1rem 0 1.25rem; }
+.ovb-lesson .sliders { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.75rem; }
+.ovb-lesson .slider label { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; font-size: 0.9rem; line-height: 1.6; }
+.ovb-lesson .slider output { margin-left: auto; color: var(--forest); font-variant-numeric: tabular-nums; }
+.ovb-lesson .sample-row { display: flex; align-items: center; gap: 1rem; margin: 0.75rem 0 1rem; }
+.ovb-lesson .sample-row span { color: var(--ink-muted); font-size: 0.875rem; }
+.ovb-lesson .figure { min-width: 0; background: var(--ivory); border: 1px solid var(--border); padding: 1rem 1.2rem; }
+.ovb-lesson .figure h3 { font-size: 1.1rem; color: var(--ink-soft); }
+.ovb-lesson .plot-stage { position: relative; }
+.ovb-lesson .figure canvas { display: block; width: 100%; height: 510px; touch-action: none; cursor: grab; }
+.ovb-lesson .figure canvas:active { cursor: grabbing; }
+.ovb-lesson .figure.compact canvas { height: 310px; }
+.ovb-lesson #figure-full canvas { height: 450px; }
+.ovb-lesson #figure-error { margin-top: 1.25rem; }
+.ovb-lesson .plot-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.ovb-lesson .plot-label { position: absolute; transform: translate(-50%,-50%); white-space: nowrap; font-size: 14px; background: rgba(250,248,244,0.94); padding: 2px 5px; line-height: 1.4; }
+.ovb-lesson .legend { display: flex; gap: 0.5rem 1rem; flex-wrap: wrap; color: var(--ink-muted); font-size: 0.875rem; margin: 0.5rem 0 0.9rem; line-height: 1.5; }
+.ovb-lesson .legend span { display: flex; align-items: center; gap: 0.4rem; }
+.ovb-lesson .swatch { display: inline-block; width: 18px; height: 3px; }
+.ovb-lesson .figure-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ovb-lesson .plot-hint { font-size: 0.875rem; line-height: 1.6; color: var(--ink-muted); margin: 0.7rem 0 0; }
+.ovb-lesson .truth-toggle { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0.45rem 0.6rem; border: 1px solid var(--border-dark); border-radius: 3px; font-size: 0.875rem; cursor: pointer; }
+.ovb-lesson .truth-toggle input { width: 16px; height: 16px; accent-color: var(--forest); }
+.ovb-lesson .student-box { margin: 1.75rem 0 0.5rem; padding: 1.4rem; background: var(--ivory-warm); border: 1px solid var(--border); }
+.ovb-lesson .student-heading { display: flex; justify-content: space-between; align-items: center; gap: 1.2rem; margin-bottom: 1.2rem; }
+.ovb-lesson .student-heading h3 { margin: 0; font-size: 1.3rem; color: var(--ink); }
+.ovb-lesson .student-layout { display: grid; grid-template-columns: minmax(230px,0.65fr) minmax(0,1.35fr); gap: 1.5rem; }
+.ovb-lesson .student-layout > div { min-width: 0; }
+.ovb-lesson .student-name { font-size: 1.15rem; font-weight: 600; margin: 0 0 1rem; }
+.ovb-lesson #student-characteristics { margin: 0; }
+.ovb-lesson #student-characteristics > div { display: flex; justify-content: space-between; gap: 0.9rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+.ovb-lesson dt { color: var(--ink-muted); font-size: 0.875rem; }
+.ovb-lesson dd { margin: 0; font-size: 0.9rem; font-variant-numeric: tabular-nums; text-align: right; }
+.ovb-lesson #student-residual { font-size: 0.9rem; }
+.ovb-lesson .student-layout .figure { padding: 0.8rem; }
+.ovb-lesson .student-layout canvas { height: 480px; }
+.ovb-lesson .dgp-details { margin: 1rem 0; padding: 0.7rem 1rem; border: 1px solid var(--border); background: var(--ivory); }
+.ovb-lesson .dgp-details > summary { cursor: pointer; font-size: 1rem; line-height: 1.6; color: var(--forest); }
+.ovb-lesson .dgp-details[open] > summary { margin-bottom: 0.75rem; }
+.ovb-lesson #dgp-distributions { background: #f0eee9; border-color: #e0ddd6; }
+.ovb-lesson #dgp-distributions > summary { color: var(--ink-muted); }
+.ovb-lesson .journal-table { max-width: 580px; margin: 1rem auto 0.5rem; font-family: Georgia,"Times New Roman",serif; color: var(--ink); }
+.ovb-lesson .table-scroll { max-width: 100%; overflow-x: auto; }
+.ovb-lesson .regression-table { width: 100%; margin: 0; border-collapse: collapse; font-size: 16px; font-variant-numeric: tabular-nums; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.ovb-lesson .regression-table caption { text-align: center; color: var(--ink); font-size: 17px; padding: 0.25rem 0 1rem; }
+.ovb-lesson .regression-table th, .ovb-lesson .regression-table td { padding: 0.5rem 1rem; text-align: center; white-space: nowrap; font-family: inherit; font-weight: 400; vertical-align: top; border: 0; }
+.ovb-lesson .regression-table th:first-child { text-align: left; width: 60%; }
+.ovb-lesson .regression-table thead { border-bottom: 1px solid var(--ink); }
+.ovb-lesson .regression-table thead th { padding-bottom: 0.75rem; }
+.ovb-lesson .regression-table .model-number > * { padding-top: 0.6rem; padding-bottom: 0; }
+.ovb-lesson .regression-table tbody > tr > * { padding-top: 0.9rem; padding-bottom: 0.55rem; }
+.ovb-lesson .regression-table .standard-error { display: block; margin-top: 0.2rem; }
+.ovb-lesson .regression-table tfoot { border-top: 1px solid var(--ink); }
+.ovb-lesson .regression-table tfoot > tr > * { padding-top: 0.3rem; padding-bottom: 0.3rem; }
+.ovb-lesson .regression-table tfoot tr:first-child > * { padding-top: 0.75rem; }
+.ovb-lesson .regression-table tfoot tr:last-child > * { padding-bottom: 0.75rem; }
+.ovb-lesson .table-notes { font-size: 14px; line-height: 1.5; margin: 0.6rem 0 0; }
+.ovb-lesson .comparison-table { max-width: 700px; }
+.ovb-lesson .comparison-table .regression-table th:first-child { width: 44%; }
+.ovb-lesson .regression-table .specification-labels th { font-size: 14px; padding-top: 0; padding-bottom: 0.75rem; }
+.ovb-lesson .causal-takeaway { font-size: clamp(1.2rem,2.3vw,1.5rem); line-height: 1.5; margin: 1.5rem 0 0.5rem; }
+.ovb-lesson .lesson-source { font-size: 0.875rem; line-height: 1.6; color: var(--ink-muted); padding: 1.5rem 0 0; }
+@media (max-width: 950px) {
+  .ovb-lesson .model-with-note { grid-template-columns: 1fr; gap: 0; }
+  .ovb-lesson .margin-note { margin: 0 0 0.9rem; max-width: 400px; }
+}
+@media (max-width: 850px) {
+  .ovb-lesson .model-row, .ovb-lesson .model-with-note .model-row { grid-template-columns: 1fr; gap: 0.15rem; }
+  .ovb-lesson .student-layout { grid-template-columns: 1fr; }
+  .ovb-lesson .figure canvas { height: 450px; }
+  .ovb-lesson .figure.compact canvas { height: 310px; }
+}
+@media (max-width: 560px) {
+  .ovb-lesson { padding: 2rem 1rem; }
+  .ovb-lesson h2 { font-size: 1.4rem; }
+  .ovb-lesson .sliders { grid-template-columns: 1fr; gap: 1rem; }
+  .ovb-lesson .simulation-controls, .ovb-lesson .student-box { padding: 1rem; }
+  .ovb-lesson .figure { padding: 0.9rem 0.5rem; }
+  .ovb-lesson .figure canvas, .ovb-lesson #figure-full canvas { height: 380px; }
+  .ovb-lesson .student-layout canvas { height: 410px; }
+  .ovb-lesson .figure.compact canvas { height: 300px; }
+  .ovb-lesson .student-heading { display: block; }
+  .ovb-lesson .student-heading button { margin-top: 0.9rem; }
+  .ovb-lesson .regression-table th, .ovb-lesson .regression-table td { padding-left: 0.6rem; padding-right: 0.6rem; }
+  .ovb-lesson .regression-table { font-size: 15px; }
+}
+@media print {
+  .ovb-lesson { max-width: 100%; padding: 0; }
+  .ovb-lesson .simulation-controls, .ovb-lesson .figure-actions, .ovb-lesson .lesson-back { display: none; }
+  .ovb-lesson .figure { break-inside: avoid; }
+}

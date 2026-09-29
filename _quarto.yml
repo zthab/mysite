@@ -13,6 +13,8 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - href: teaching.html
+        text: Teaching
       - resources.qmd
       - text: CV
         file: zahra_thabet_cv.pdf

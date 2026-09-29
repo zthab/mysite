@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omitted variable bias · Zahra Thabet</title>
+  <meta name="description" content="An interactive lesson on omitted variable bias, causal effects, and exogeneity, with a downloadable R simulation.">
+  <link rel="canonical" href="https://zahrathabet.com/teaching/omitted-variable-bias/">
+  <meta property="og:title" content="Omitted variable bias · Zahra Thabet">
+  <meta property="og:description" content="An interactive lesson on omitted variable bias, causal effects, and exogeneity, with a downloadable R simulation.">
+  <meta property="og:url" content="https://zahrathabet.com/teaching/omitted-variable-bias/">
+  <meta property="og:image" content="https://zahrathabet.com/og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts (non-render-blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title"><a href="../../index.html">Zahra Thabet</a></h1>
+      <nav class="site-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../../about.html">About</a>
+        <a href="../../teaching.html" class="active" aria-current="page">Teaching</a>
+        <a href="../../resources.html">Resources</a>
+        <a href="../../zahra_thabet_cv.pdf">CV</a>
+      </nav>
+    </div>
+  </header>
+  <main class="ovb-lesson">
+    <p class="lesson-back"><a href="../../teaching.html">← Teaching</a></p>
+
+<h1>Omitted variable bias</h1>
+
+<section class="lesson-section" id="true-model"><h2>1. <a href="https://theeffectbook.net/ch-Identification.html#the-data-generating-process" target="_blank" rel="noopener noreferrer">The Data Generating Process</a></h2>
+<p class="explanation">Simulations are incredibly powerful tools to understand estimators, such as ordinary least squares (OLS).</p>
+<p class="explanation">In a simulation, we first pretend we control the world and know exactly how the data is produced; this is usually called a data generating process (DGP). We then pretend that we do not know this DGP, and instead just see the data it produces. Our task is then to see how well our estimator recovers the true causal effect in this DGP. Failure in a simulation shows where an estimator can break down; whether that problem arises in real data depends on the actual DGP.</p>
+<p class="explanation">We can also test how robust our estimator is to misspecification, which is what we will do here.</p>
+<p class="explanation">Suppose the following relationship described the real world: a student <span data-tex="i"></span>’s test score is completely determined by the hours they study, the hours they sleep, and some normally distributed noise:</p>
+<div class="model-row"><span>Data generating process</span><div id="true-equation" class="math"></div></div>
+<details id="dgp-distributions" class="dgp-details">
+<summary>DGP details: how the data are drawn</summary>
+<p class="explanation">For each student, we draw two independent uniform variables and an independent noise term. Draws are independent across students:</p>
+<div class="math" data-tex="A_i,B_i\overset{\mathrm{iid}}{\sim}\operatorname{Uniform}(-\sqrt{3},\sqrt{3})"></div>
+<div class="model-row"><span>Study hours</span><div class="math" data-tex="\mathrm{Study}_i=4+\sqrt{3}\,A_i\;\sim\;\operatorname{Uniform}(1,7)"></div></div>
+<div class="model-row"><span>Sleep hours</span><div class="math" data-tex="\mathrm{Sleep}_i=7+0.75\left(\rho A_i+\sqrt{1-\rho^2}\,B_i\right)"></div></div>
+<div class="model-row"><span>Noise</span><div id="noise-distribution" class="math"></div></div>
+<p class="small"><a href="ovb_dgp.R" download="ovb_dgp.R">Download the R DGP file</a> to experiment. Edit the settings at the top, then run it in R or RStudio to generate data, fit both regressions, and plot the results. Extension: how robust is a regression estimator to other distributions of noise?</p>
+</details>
+<p class="explanation">We prespecify how correlated sleep and study hours are. Play around with the following two sliders and see how this changes the following plot (in 3D and both 2D views). What do you notice?</p>
+<section class="parameters simulation-controls" aria-label="Simulation parameters"><div id="sliders" class="sliders"></div></section>
+<div class="figure" id="figure-true"></div>
+<p class="explanation">The green plane shows the true relationship before adding noise. Each dot is one student’s observed score, including noise.</p>
+</section>
+<section class="lesson-section" id="correct-dgp"><h2>2. Hitting the Jackpot: Guessing the Correct DGP</h2>
+<p class="explanation">Now pretend that we are economists who are either very smart or very lucky and propose the following regression model:</p>
+<div class="model-with-note"><div class="model-row"><span>Proposed model</span><div id="full-proposed" class="math"></div></div><aside class="margin-note">I use <span data-tex="\varepsilon_{1i}"></span> for the <strong>error</strong>: the deviation from the true relationship.</aside></div>
+<p class="explanation">We use ordinary least squares (OLS) to estimate the model’s coefficients using our sample of 500 students:</p>
+<div class="model-with-note"><div class="model-row"><span>Estimated model</span><div id="estimated-equation" class="math"></div></div><aside class="margin-note">I use <span data-tex="\hat e_{1i}"></span> for the <strong>residual</strong>: observed score (<span data-tex="\mathrm{Score}_i"></span>) minus fitted score:<div id="fitted-score-equation" class="math"></div></aside></div>
+<details id="regression-table" class="dgp-details">
+<summary>Regression table</summary>
+<p class="explanation">This is a standard regression table. Try to put the coefficients, standard error, and <span data-tex="R^2"></span> in sentences. Are standard errors always positive?</p>
+<div class="journal-table"><div class="table-scroll"><table class="regression-table" aria-label="OLS Estimates of Test Scores" aria-describedby="regression-table-notes"><thead><tr class="model-number"><td></td><th scope="col">(1)</th></tr><tr><th scope="col">Dependent variable:</th><th scope="col">Test score</th></tr></thead><tbody id="regression-table-rows"></tbody><tfoot id="regression-fit"></tfoot></table></div>
+<p id="regression-table-notes" class="table-notes"><em>Notes:</em> Standard errors in parentheses. OLS estimates include a constant; standard errors assume independent errors with constant variance.</p></div>
+</details>
+<div class="sample-row"><button id="resample">New sample</button><span>500 students</span></div>
+<div class="figure" id="figure-full"></div>
+<p class="small">Study and sleep are hours per day. Test scores are points.</p>
+<div class="student-box"><div class="student-heading"><h3>Let’s look at one specific person.</h3><button id="random-student">Choose another student</button></div><div class="student-layout"><div><p id="student-name" class="student-name"></p><dl id="student-characteristics"></dl><div id="student-residual" class="math"></div></div><div class="figure" id="figure-person"></div></div></div>
+<p class="explanation">Ask yourself, does the exogeneity condition hold in this regression?</p>
+</section>
+<section class="lesson-section" id="omission"><h2>3. A model that ignores sleep</h2>
+<p class="explanation">Let’s now pretend we are economists who wake up without any insight into how the real world works. We think that test scores depend only on the number of hours studied. We propose the following model:</p>
+<div id="omitted-true" class="math"></div>
+<p class="explanation">On the same sample of students, we estimate this model by OLS:</p>
+<div class="model-row"><span>Estimated model</span><div id="omitted-estimated" class="math"></div></div>
+<details id="comparison-regression-table" class="dgp-details">
+<summary>Regression table: both specifications</summary>
+<p class="explanation">This regression table contains the results from the regression in the previous section in column (1) and this section in column (2).</p>
+<div class="journal-table comparison-table"><div class="table-scroll"><table class="regression-table" aria-describedby="comparison-table-notes"><caption>Table 2. OLS Estimates With and Without Sleep</caption><thead><tr class="model-number"><td></td><th scope="col">(1)</th><th scope="col">(2)</th></tr><tr><th scope="col">Dependent variable:</th><th scope="col">Test score</th><th scope="col">Test score</th></tr><tr class="specification-labels"><td></td><th scope="col">With sleep</th><th scope="col">Without sleep</th></tr></thead><tbody id="comparison-table-rows"></tbody><tfoot id="comparison-fit"></tfoot></table></div>
+<p id="comparison-table-notes" class="table-notes"><em>Notes:</em> Standard errors in parentheses. Both specifications use the same students and include a constant. Standard errors assume independent errors with constant variance.</p></div>
+</details>
+<div class="figure" id="figure-omitted"></div>
+<p class="explanation">The brown line is the regression estimated using study alone. The dashed green line shows the true study effect of 5, holding sleep at its sample average. Omitting sleep can make the estimated slope differ from this true effect.</p>
+</section>
+<section class="lesson-section" id="second-model-error"><h2>4. Does the exogeneity condition hold in the misspecified regression?</h2>
+<p class="explanation">Since we know the DGP, we can check whether the study-only regression recovers the causal effect of study. Keep the true study coefficient of 5 and collect sleep and noise in a composite error, <span data-tex="v_i"></span>:</p>
+<div class="math" data-tex="\mathrm{Score}_i=20+5\,\mathrm{Study}_i+v_i"></div>
+<div id="second-error-formula" class="math"></div>
+<p id="error-centering-explanation" class="explanation"></p>
+<div id="error-recentering" class="math"></div>
+<div id="recentered-error-moments" class="math"></div>
+<p id="recentered-error-distribution-note" class="small"></p>
+<p class="explanation">Now check the exogeneity condition for this causal effect, <span data-tex="E[u\mid\mathrm{Study}]=0"></span>:</p>
+<div class="figure" id="figure-error"></div>
+<p id="second-error-explanation" class="explanation"></p>
+<p class="small">The <a href="https://home.cerge-ei.cz/kaliskova/files/aqm2/Wooldridge%20Econometrics%20analysis.pdf#page=44" target="_blank" rel="noopener noreferrer">population study-only regression</a> has its own error, <span data-tex="\varepsilon_{2i}"></span>. In this DGP, <span data-tex="E[\varepsilon_{2i}\mid\mathrm{Study}_i]=0"></span> because its population slope absorbs the trend. It correctly describes average scores given study hours, but that slope need not equal the causal effect of 5. The plot above uses <span data-tex="u_i"></span>, the error with the causal slope held at 5.</p>
+</section>
+<section class="lesson-section" id="exogeneity"><h2>5. Where does the bias come from?</h2>
+<p class="explanation">In class, we spent some time on intuition of the direction of bias. Here, I will provide a slightly more programmatic way to figure that out with two simple questions. As a review, recall that</p>
+<div class="math" data-tex="\text{Population bias}=\beta_2\frac{\operatorname{Cov}(\mathrm{Study},\mathrm{Sleep})}{\operatorname{Var}(\mathrm{Study})}=\beta_2\,\rho\,\frac{\sigma_{\mathrm{Sleep}}}{\sigma_{\mathrm{Study}}}"></div>
+<p class="explanation">The direction of bias comes from two parts: the effect of sleep on test scores (<span data-tex="Y"></span>) and the sign of the correlation between sleep hours and study hours. These two parts let us quickly understand which direction bias will go in:</p>
+<ol>
+<li><p class="explanation"><strong>Does sleep cause better test scores (apart from study hours’ own effect)?</strong></p></li>
+<li><p class="explanation"><strong>Are sleep hours and study hours positively correlated?</strong></p></li>
+</ol>
+<p id="bias-direction-current" class="explanation" aria-live="polite"></p>
+<div id="bias-numbers" class="math"></div>
+<p id="bias-sample-comparison" class="explanation"></p>
+<aside class="student-box" id="zero-correlation-example" aria-labelledby="zero-correlation-title">
+<div class="student-heading"><h3 id="zero-correlation-title">Edge case: Things that affect Y (test score) but are unrelated to X (study hours).</h3></div>
+<p class="explanation">Set study and sleep’s population correlation to zero. In this simulation, students who study more then get the same amount of sleep on average. Whatever sleep’s effect on scores, it gives neither group a systematic advantage: <strong>the population bias is zero</strong>.</p>
+<div class="figure-actions"><button id="zero-correlation" type="button">Set correlation to 0</button><button id="restore-correlation" type="button" disabled>Set to previous correlation</button></div>
+<p id="zero-correlation-status" class="explanation" aria-live="polite"></p>
+<div class="model-row"><span>At zero correlation</span><div id="zero-slope-equation" class="math"></div></div>
+<p class="explanation">After setting the correlation to zero, look at the <a href="#figure-error">error plot in Section 4</a>: its conditional mean is flat at zero, although individual errors still vary. Sleep’s average contribution is now in the intercept, so the model is <span id="zero-model-equation"></span> with <span data-tex="E[u\mid\mathrm{Study}]=0"></span>.</p>
+<p class="causal-takeaway"><strong>We do not need to control for everything that affects the outcome to have a causal estimate.</strong></p>
+</aside>
+<aside class="student-box" aria-labelledby="zero-effect-title">
+<div class="student-heading"><h3 id="zero-effect-title">Edge case: Things with no direct effect on Y (test score), holding X fixed, but correlated with X.</h3></div>
+<p class="explanation">Think through this on your own! What do you think this would look like?</p>
+</aside>
+<aside class="student-box" aria-labelledby="unbiasedness-nuance-title">
+<div class="student-heading"><h3 id="unbiasedness-nuance-title">Nuance: Can the OLS slope estimator be unbiased even when conditional exogeneity fails?</h3></div>
+<p class="explanation">Yes, in special cases! This distinction does not arise in our current DGP at zero correlation. But we could construct a different DGP in which the error’s average varies nonlinearly with study hours, so <span data-tex="E[u\mid\mathrm{Study}]\neq0"></span>. With an appropriate symmetry, the resulting upward and downward deviations in the estimated slope cancel across repeated samples. The slope estimator can then be unbiased even though conditional exogeneity fails.</p>
+</aside>
+</section>
+<footer class="lesson-source">Study-hours example adapted from <a href="https://www.econsims.org/modules/omitted-variable-bias" target="_blank" rel="noopener noreferrer">Econ Simulations</a>.</footer>
+
+  </main>
+  <footer class="site-footer">
+    <div class="footer-ornament"></div>
+  </footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
