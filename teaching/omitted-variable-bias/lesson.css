@@ -9,7 +9,7 @@
 .ovb-lesson .lesson-section { padding: 1.75rem 0; border-bottom: 1px solid var(--border); }
 .ovb-lesson h2 { margin: 0 0 1.25rem; font-size: 1.55rem; }
 .ovb-lesson h3 { margin: 0 0 0.5rem; }
-.ovb-lesson .explanation { max-width: 65ch; margin: 1rem 0; }
+.ovb-lesson .explanation { margin: 1rem 0; }
 .ovb-lesson .small { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
 .ovb-lesson .math { min-width: 0; max-width: 100%; overflow-x: auto; white-space: nowrap; line-height: 2; padding: 0.6rem 0; font-size: 1rem; }
 .ovb-lesson .model-row { display: grid; grid-template-columns: 155px minmax(0,1fr); align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
