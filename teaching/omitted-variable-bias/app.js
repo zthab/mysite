@@ -23,9 +23,7 @@ function render(){
  $('b2').value=state.b2;$('value-b2').textContent=fmt(state.b2);
  $('restore-correlation').disabled=state.rho!==0||previousCorrelation===null;
  const errorMean=state.b2*MODEL.meanSleep,centeredIntercept=MODEL.b0+errorMean;
- $('zero-correlation-status').textContent=state.rho===0
-  ? `Correlation is set to 0. Population study slope: 5. In this sample: ${result.fit.b.toFixed(2)} without sleep and ${result.full.b1.toFixed(2)} with sleep. All plots and equations use this setting.`
-  : `The simulation’s current correlation is ${fmt(state.rho)}. Use “Set correlation to 0” to apply the zero-correlation example to all plots and equations.`;
+ $('zero-correlation-status').textContent=`Current study–sleep correlation: ${fmt(state.rho)}. These buttons update all plots.`;
  putMath('noise-distribution',String.raw`\mathrm{Noise}_i\overset{\mathrm{iid}}{\sim}\mathcal N(0,${MODEL.sigma}^2)`);
  putMath('true-equation',String.raw`\mathrm{Score}_i=20+5\,\mathrm{Study}_i${term(state.b2,'Sleep')}+\mathrm{Noise}_i`);
  putMath('full-proposed',String.raw`\mathrm{Score}_i=\beta_0+\beta_1\mathrm{Study}_i+\beta_2\mathrm{Sleep}_i+\varepsilon_{1i}`);
@@ -50,8 +48,6 @@ function render(){
  putMath('error-recentering',String.raw`\begin{aligned}\mathrm{Score}_i&=${fmt(centeredIntercept)}+5\,\mathrm{Study}_i+u_i\\u_i&=${fmt(state.b2)}(\mathrm{Sleep}_i-7)+\mathrm{Noise}_i,\quad\mathrm{Noise}_i\sim\mathcal N(0,${MODEL.sigma}^2)\end{aligned}`);
  putMath('recentered-error-moments',String.raw`E[u_i]=0,\qquad\operatorname{Var}(u_i)=(${fmt(state.b2)})^2(0.75)^2+${MODEL.sigma}^2=${(state.b2**2*MODEL.sdSleep**2+MODEL.sigma**2).toFixed(4)}`);
  $('recentered-error-distribution-note').innerHTML=state.b2===0?`With a zero sleep coefficient, ${tex('u_i')} is just normally distributed Noise.`:`Only Noise is normally distributed here; the combined error ${tex('u_i')} also contains sleep.`;
- putMath('zero-slope-equation',String.raw`\alpha_1=5+(${fmt(state.b2)})\times 0=5`);
- putMath('zero-model-equation',String.raw`\mathrm{Score}=${fmt(centeredIntercept)}+5\,\mathrm{Study}+u`);
  $('second-error-explanation').textContent=state.b2===0
   ? 'With no direct sleep effect, the recentered error is just noise. The green line is flat at zero, and the population slope bias is zero.'
   : state.rho===0

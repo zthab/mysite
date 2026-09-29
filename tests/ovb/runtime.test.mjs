@@ -21,7 +21,7 @@ globalThis.cancelAnimationFrame=()=>{};
 globalThis.requestAnimationFrame=fn=>{fn(performance.now()+3000);return 1;};
 globalThis.matchMedia=()=>({matches:false});
 await import('../../teaching/omitted-variable-bias/app.js');
-for(const id of ['noise-distribution','full-proposed','bias-numbers','second-error-formula','fitted-score-equation','recentered-error-moments','true-equation','estimated-equation','omitted-true','omitted-estimated','error-recentering','zero-slope-equation','zero-model-equation'])assert.match(elements.get(id).innerHTML,/class="katex"/);
+for(const id of ['noise-distribution','full-proposed','bias-numbers','second-error-formula','fitted-score-equation','recentered-error-moments','true-equation','estimated-equation','omitted-true','omitted-estimated','error-recentering'])assert.match(elements.get(id).innerHTML,/class="katex"/);
 assert.match(elements.get('figure-error').querySelector('.legend').innerHTML,/Expected error given study hours/);
 assert.doesNotMatch(elements.get('figure-error').innerHTML,/OLS residual/);
 assert.match(elements.get('second-error-explanation').textContent,/rises/);
@@ -143,7 +143,6 @@ assert.ok(Math.abs(current.selectedStudent.y-originalStudent.y+6*originalStudent
 assert.match(elements.get('bias-direction-current').textContent,/sleep lowers scores.*downward bias/);
 assert.match(elements.get('error-centering-explanation').innerHTML,/mean -21.00/);
 assert.match(elements.get('figure-error').querySelector('.plot-hint').textContent,/-3.00 ×/);
-assert.match(elements.get('zero-model-equation').innerHTML,/Score\}=-1.00/);
 configure.execute({rho:-.85});assert.ok(read.execute({}).bias>0);
 configure.execute({b2:0});assert.ok(Math.abs(read.execute({}).bias)<1e-12);
 checkDgpPlot();

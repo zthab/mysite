@@ -115,25 +115,21 @@
 <p id="bias-direction-current" class="explanation" aria-live="polite"></p>
 <div id="bias-numbers" class="math"></div>
 <p id="bias-sample-comparison" class="explanation"></p>
-<aside class="student-box" id="zero-correlation-example" aria-labelledby="zero-correlation-title">
-<div class="student-heading"><h3 id="zero-correlation-title">Edge case: Things that affect Y (test score) but are unrelated to X (study hours).</h3></div>
-<p class="explanation">Set study and sleep’s population correlation to zero. In this simulation, students who study more then get the same amount of sleep on average. Whatever sleep’s effect on scores, it gives neither group a systematic advantage: <strong>the population bias is zero</strong>.</p>
+<section class="student-box exercises" id="exercises" aria-labelledby="exercises-title">
+<div class="student-heading"><h3 id="exercises-title">Exercises</h3></div>
+<p class="explanation">For questions 1 and 2, use this DGP and let <span data-tex="X"></span> be study hours and <span data-tex="Y"></span> be test score.</p>
+<ol class="exercises-list">
+<li id="zero-correlation-example">
+<p class="explanation" id="zero-correlation-title"><strong>Does omitting a variable that directly affects <span data-tex="Y"></span> but is uncorrelated with <span data-tex="X"></span> violate unconfoundedness?</strong></p>
 <div class="figure-actions"><button id="zero-correlation" type="button">Set correlation to 0</button><button id="restore-correlation" type="button" disabled>Set to previous correlation</button></div>
-<p id="zero-correlation-status" class="explanation" aria-live="polite"></p>
-<div class="model-row"><span>At zero correlation</span><div id="zero-slope-equation" class="math"></div></div>
-<p class="explanation">After setting the correlation to zero, look at the <a href="#figure-error">error plot in Section 4</a>: its conditional mean is flat at zero, although individual errors still vary. Sleep’s average contribution is now in the intercept, so the model is <span id="zero-model-equation"></span> with <span data-tex="E[u\mid\mathrm{Study}]=0"></span>.</p>
-<p class="causal-takeaway"><strong>We do not need to control for everything that affects the outcome to have a causal estimate.</strong></p>
-</aside>
-<aside class="student-box" aria-labelledby="zero-effect-title">
-<div class="student-heading"><h3 id="zero-effect-title">Edge case: Things with no direct effect on Y (test score), holding X fixed, but correlated with X.</h3></div>
-<p class="explanation">Think through this on your own! What do you think this would look like?</p>
-</aside>
-<aside class="student-box" aria-labelledby="unbiasedness-nuance-title">
-<div class="student-heading"><h3 id="unbiasedness-nuance-title">Nuance: Can the OLS slope estimator be unbiased even when conditional exogeneity fails?</h3></div>
-<p class="explanation">Yes, in special cases! This distinction does not arise in our current DGP at zero correlation. But we could construct a different DGP in which the error’s average varies nonlinearly with study hours, so <span data-tex="E[u\mid\mathrm{Study}]\neq0"></span>. With an appropriate symmetry, the resulting upward and downward deviations in the estimated slope cancel across repeated samples. The slope estimator can then be unbiased even though conditional exogeneity fails.</p>
-</aside>
+<p id="zero-correlation-status" class="small" aria-live="polite"></p>
+</li>
+<li><p class="explanation" id="zero-effect-title"><strong>Does omitting a variable that is correlated with <span data-tex="X"></span> but has no direct effect on <span data-tex="Y"></span>, holding <span data-tex="X"></span> fixed, violate unconfoundedness?</strong></p></li>
+<li><p class="explanation" id="unbiasedness-nuance-title"><strong>Can the OLS slope estimator be unbiased for the causal study effect even when conditional exogeneity fails?</strong></p></li>
+</ol>
 </section>
-<footer class="lesson-source">Study-hours example adapted from <a href="https://www.econsims.org/modules/omitted-variable-bias" target="_blank" rel="noopener noreferrer">Econ Simulations</a>.</footer>
+</section>
+<footer class="lesson-source"><p>Study-hours example adapted from <a href="https://www.econsims.org/modules/omitted-variable-bias" target="_blank" rel="noopener noreferrer">Econ Simulations</a>.</p><p>Acknowledgement: James Han.</p></footer>
 
   </main>
   <footer class="site-footer">

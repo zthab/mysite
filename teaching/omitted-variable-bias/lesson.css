@@ -12,6 +12,7 @@
 .ovb-lesson .explanation { margin: 1rem 0; }
 .ovb-lesson .small { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
 .ovb-lesson .math { min-width: 0; max-width: 100%; overflow-x: auto; white-space: nowrap; line-height: 2; padding: 0.6rem 0; font-size: 1rem; }
+.ovb-lesson :is(p, .margin-note, dt, dd) .katex:not(.math .katex) { font-size: 1em; }
 .ovb-lesson .model-row { display: grid; grid-template-columns: 155px minmax(0,1fr); align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
 .ovb-lesson .model-row > span { font-size: 0.875rem; color: var(--ink-muted); }
 .ovb-lesson .model-row .math { padding: 0.25rem 0; }
@@ -87,7 +88,9 @@
 .ovb-lesson .comparison-table { max-width: 700px; }
 .ovb-lesson .comparison-table .regression-table th:first-child { width: 44%; }
 .ovb-lesson .regression-table .specification-labels th { font-size: 14px; padding-top: 0; padding-bottom: 0.75rem; }
-.ovb-lesson .causal-takeaway { font-size: clamp(1.2rem,2.3vw,1.5rem); line-height: 1.5; margin: 1.5rem 0 0.5rem; }
+.ovb-lesson .exercises-list { margin: 0; }
+.ovb-lesson .exercises-list > li + li { margin-top: 1.5rem; }
+.ovb-lesson .exercises-list .figure-actions { margin: 0.75rem 0; }
 .ovb-lesson .lesson-source { font-size: 0.875rem; line-height: 1.6; color: var(--ink-muted); padding: 1.5rem 0 0; }
 @media (max-width: 950px) {
   .ovb-lesson .model-with-note { grid-template-columns: 1fr; gap: 0; }
