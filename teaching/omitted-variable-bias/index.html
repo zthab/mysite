@@ -104,8 +104,8 @@
 <p id="second-error-explanation" class="explanation"></p>
 </section>
 <section class="lesson-section" id="exogeneity"><h2>5. Where does the bias come from?</h2>
-<p class="explanation">In class, we spent some time on intuition of the direction of bias. Here, I will provide a slightly more programmatic way to figure that out with two simple questions. As a review, recall that</p>
-<div class="math" data-tex="\text{Population bias}=\beta_2\frac{\operatorname{Cov}(\mathrm{Study},\mathrm{Sleep})}{\operatorname{Var}(\mathrm{Study})}"></div>
+<p class="explanation">In class, we spent some time on intuition of the direction of bias. Here, I will provide a slightly more programmatic way to figure that out with two simple questions. As a review, remember we are trying to understand the direction of bias on the study hours coefficient in the short regression (<a href="#omission">Section 3</a>). Recall that</p>
+<div class="math" data-tex="E[\hat\alpha_1]=\beta_1+\text{bias}=\beta_1+\beta_2\frac{\operatorname{Cov}(\mathrm{Study},\mathrm{Sleep})}{\operatorname{Var}(\mathrm{Study})}"></div>
 <p class="explanation">The direction of bias comes from two parts: the effect of sleep on test scores (<span data-tex="Y"></span>) and the sign of the correlation between sleep hours and study hours. These two parts let us quickly understand which direction bias will go in:</p>
 <ol>
 <li><p class="explanation"><strong>Does sleep cause better test scores (apart from study hours’ own effect)?</strong></p></li>
