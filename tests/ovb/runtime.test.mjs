@@ -40,62 +40,12 @@ function checkDgpPlot(){
   result.full={a:800,b1:-100,b2:200};plot.ctx.strokes=[];plot.draw();
   assert.deepEqual(plot.ctx.strokes,planeStrokes,'The true plane must not depend on fitted coefficients');
  }finally{result.full=fullFit;}
- for(const [view,key,otherKey,beta,otherBeta] of [['study','x','z','b1','b2'],['sleep','z','x','b2','b1']]){
-  plot.ctx.strokes=[];plot.ctx.fills=[];root.querySelector(`${view}-view`).onclick();
-  assert.equal(plot.is3D,false);assert.equal(plot.points.length,500);
-  assert.ok(!plot.ctx.fills.some(color=>String(color).startsWith('rgba(50,74,59')),'A score view shows a true line, not a plane');
-  const lines=plot.ctx.strokes.filter(s=>s.color==='#324a3b'&&s.width===2.7);assert.equal(lines.length,1);
-  const samples=plot.points.map(p=>({screen:p,datum:result.data[p.id]})),first=samples[0],second=samples.find(p=>Math.abs(p.datum.y-first.datum.y)>1e-6&&Math.abs(p.datum[key]-first.datum[key])>1e-6);
-  const yScale=(second.screen.y-first.screen.y)/(second.datum.y-first.datum.y),xScale=(second.screen.x-first.screen.x)/(second.datum[key]-first.datum[key]);
-  const [a,b]=lines[0].points,screenSlope=(b[1]-a[1])/(b[0]-a[0]);
-  assert.ok(Math.abs(screenSlope*xScale/yScale-result.model[beta])<1e-9);
-  const held=result.data.reduce((sum,d)=>sum+d[otherKey],0)/result.data.length;
-  const trueScore=result.model.b0+result.model[beta]*first.datum[key]+result.model[otherBeta]*held;
-  assert.ok(Math.abs(a[1]+screenSlope*(first.screen.x-a[0])-(first.screen.y+yScale*(trueScore-first.datum.y)))<1e-8);
-  assert.match(root.querySelector('.legend').innerHTML,/True line/);
-  assert.match(root.querySelector('.plot-hint').textContent,/is held at/);
- }
  root.querySelector('reset').onclick();assert.equal(plot.is3D,true);
 }
 checkDgpPlot();
 assert.doesNotMatch(full.querySelector('.plot-labels').innerHTML,/beta_1|Delta/);
 assert.match(person.querySelector('.plot-labels').innerHTML,/beta_1/);
 assert.match(person.querySelector('.plot-labels').innerHTML,/hat e/);
-for(const root of [full,person]){
- const plot=plots.get(root.id);
- for(const [view,key,otherKey,beta] of [['study','x','z','b1'],['sleep','z','x','b2']]){
-  plot.ctx.strokes=[];plot.ctx.fills=[];
-  root.querySelector(`${view}-view`).onclick();
-  assert.equal(plot.flat,1);assert.equal(plot.is3D,false);
-  assert.equal(plot.axes.length,2);
-  assert.match(root.querySelector('.legend').innerHTML,/Fitted line/);
-  assert.doesNotMatch(root.querySelector('.legend').innerHTML,/Fitted plane/);
-  assert.match(root.querySelector('.plot-hint').textContent,/is held at/);
-  assert.ok(!plot.ctx.fills.some(color=>String(color).startsWith('rgba(138,120,93')),'No shaded plane in either score view');
-  const lines=plot.ctx.strokes.filter(s=>s.color==='#8a785d'&&s.width===2.7);
-  assert.equal(lines.length,1);assert.equal(lines[0].points.length,2);
-  const {state,result}=plot.getModel(),selected=result.data[state.selected];
-  const endpoints=lines[0].points,screenSlope=(endpoints[1][1]-endpoints[0][1])/(endpoints[1][0]-endpoints[0][0]);
-  const slope=result.full[beta];
-  assert.equal(Math.sign(screenSlope),-Math.sign(slope));
-  const held=root===person?selected[otherKey]:result.data.reduce((sum,d)=>sum+d[otherKey],0)/result.data.length;
-  assert.match(root.querySelector('.plot-hint').textContent,new RegExp(held.toFixed(2)));
-  // Convert the line and observed points back to a common y scale. This checks
-  // the fitted coefficient and intercept without duplicating the plot's bounds.
-  const samples=plot.points.map(p=>({screen:p,datum:result.data[p.id]}));
-  const first=samples[0],second=samples.find(p=>Math.abs(p.datum.y-first.datum.y)>1e-6&&Math.abs(p.datum[key]-first.datum[key])>1e-6);
-  assert.ok(second);
-  const yScale=(second.screen.y-first.screen.y)/(second.datum.y-first.datum.y),xScale=(second.screen.x-first.screen.x)/(second.datum[key]-first.datum[key]);
-  assert.ok(Math.abs(screenSlope*xScale/yScale-slope)<1e-9);
-  const predicted=result.full.a+slope*first.datum[key]+result.full[beta==='b1'?'b2':'b1']*held;
-  const screenPredicted=endpoints[0][1]+screenSlope*(first.screen.x-endpoints[0][0]);
-  assert.ok(Math.abs(screenPredicted-(first.screen.y+yScale*(predicted-first.datum.y)))<1e-8);
-  if(root===person){assert.match(root.querySelector('.plot-labels').innerHTML,new RegExp(`beta_${view==='study'?1:2}`));assert.doesNotMatch(root.querySelector('.plot-labels').innerHTML,new RegExp(`beta_${view==='study'?2:1}`));}
- }
- root.querySelector('reset').onclick();assert.equal(plot.is3D,true);assert.equal(plot.flat,0);assert.equal(plot.scoreView,null);
- assert.match(root.querySelector('.legend').innerHTML,/Fitted plane/);
- root.querySelector('sleep-view').onclick();plot.canvas.handlers.keydown({key:'r',preventDefault(){}});assert.equal(plot.is3D,true);assert.equal(plot.scoreView,null);
-}
 assert.doesNotMatch(full.querySelector('.legend').innerHTML,/True relationship/);
 const truthToggle=full.querySelector('true-relationship');truthToggle.checked=true;truthToggle.onclick();
 assert.match(full.querySelector('.legend').innerHTML,/True relationship/);

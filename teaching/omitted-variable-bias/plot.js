@@ -35,25 +35,23 @@ export class Plot {
     this.view = defaultView(); this.is3D=['true','full','person'].includes(config.mode);this.flat=this.is3D?0:1; this.points = []; this.axes = [];
     this.root = document.getElementById(id);
     if (config.field) this.root.classList.add('compact');
-    this.fittedPlane = true; this.showTrue = false; this.scoreView = null;
-    this.root.innerHTML=`<h3>${config.title}</h3><div class="plot-stage"><canvas tabindex="0" aria-label="${config.title}. Arrow keys move the view; R resets it."></canvas><div class="plot-labels"></div></div><div class="legend"></div><div class="figure-actions">${config.mode==='full'?'<label class="truth-toggle"><input type="checkbox" data-action="true-relationship"> True relationship</label>':''}${this.is3D?'<button data-action="study-view">Study–score view</button><button data-action="sleep-view">Sleep–score view</button>':''}${config.mode==='omitted'?'<button data-action="flatten">Replay collapse</button>':''}<button data-action="reset">Reset view</button></div><p class="plot-hint"></p>`;
+    this.fittedPlane = true; this.showTrue = false;
+    this.root.innerHTML=`<h3>${config.title}</h3><div class="plot-stage"><canvas tabindex="0" aria-label="${config.title}. Arrow keys move the view; R resets it."></canvas><div class="plot-labels"></div></div><div class="legend"></div><div class="figure-actions">${config.mode==='full'?'<label class="truth-toggle"><input type="checkbox" data-action="true-relationship"> True relationship</label>':''}${config.mode==='omitted'?'<button data-action="flatten">Replay collapse</button>':''}<button data-action="reset">Reset view</button></div><p class="plot-hint"></p>`;
     this.canvas = this.root.querySelector('canvas'); this.ctx = this.canvas.getContext('2d');
     this.root.querySelectorAll('[data-action]').forEach(b => b.onclick = () => {
       if (b.dataset.action === 'true-relationship') this.showTrue=b.checked;
       else if (b.dataset.action === 'flatten') this.animateFlatten();
-      else if (b.dataset.action === 'study-view' || b.dataset.action === 'sleep-view') {cancelAnimationFrame(this.animation);this.scoreView=b.dataset.action==='study-view'?'study':'sleep';this.view=defaultView();this.is3D=false;this.flat=1;}
       else if (b.dataset.action === 'reset') this.resetView();
       else this.zoom(b.dataset.action === 'zoom-in' ? 1.15 : 1 / 1.15);
-      this.syncControls(); this.draw();
+      this.draw();
     });
-    this.bindPointer(); this.syncControls();
+    this.bindPointer();
     this.resizeObserver = new ResizeObserver(() => this.draw()); this.resizeObserver.observe(this.canvas);
   }
-  resetView() {cancelAnimationFrame(this.animation);this.scoreView=null;this.view=defaultView();this.is3D=['true','full','person'].includes(this.config.mode);this.flat=this.is3D?0:1;}
-  syncControls() {this.root.querySelectorAll('[data-action]').forEach(b=>{if(['study-view','sleep-view'].includes(b.dataset.action))b.setAttribute('aria-pressed',String(b.dataset.action===`${this.scoreView}-view`));});}
+  resetView() {cancelAnimationFrame(this.animation);this.view=defaultView();this.is3D=['true','full','person'].includes(this.config.mode);this.flat=this.is3D?0:1;}
   zoom(factor) { this.view.zoomX = clamp(this.view.zoomX * factor, .45, 2); this.view.zoomY = clamp(this.view.zoomY * factor, .45, 2); }
   animateFlatten() {
-    cancelAnimationFrame(this.animation); this.view = defaultView(); this.syncControls();
+    cancelAnimationFrame(this.animation); this.view = defaultView();
     const start = performance.now(), duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1400;
     const tick = now => { const t = duration ? Math.min(1, (now - start) / duration) : 1; this.flat = t * t * (3 - 2 * t); this.draw(); if (t < 1) this.animation = requestAnimationFrame(tick); };
     this.animation = requestAnimationFrame(tick);
@@ -74,7 +72,7 @@ export class Plot {
       this.drag.moved = true; cancelAnimationFrame(this.animation);
       if (!this.is3D) this.flat = 1;
       this.view = dragView(this.drag.view, dx, dy, this.drag.axis, this.is3D, canvas.clientWidth, canvas.clientHeight);
-      this.syncControls(); this.draw();
+      this.draw();
     });
     canvas.addEventListener('pointerup', e => {
       if (this.drag && !this.drag.moved && !this.config.field) { const p = local(e); const near = this.points.map(d => ({ ...d, distance: Math.hypot(d.x - p.x, d.y - p.y) })).sort((a, b) => a.distance - b.distance)[0]; if (near?.distance < 16) this.onSelect(near.id); }
@@ -88,55 +86,10 @@ export class Plot {
       if (e.key.toLowerCase() === 'r') this.resetView();
       else if (['+', '=', '-'].includes(e.key)) this.zoom(e.key === '-' ? 1 / 1.15 : 1.15);
       else { const d = e.shiftKey ? 30 : 10, dx = e.key === 'ArrowLeft' ? -d : e.key === 'ArrowRight' ? d : 0, dy = e.key === 'ArrowUp' ? -d : e.key === 'ArrowDown' ? d : 0; this.view = dragView(this.view, dx, dy, null, this.is3D, canvas.clientWidth, canvas.clientHeight); }
-      this.syncControls(); this.draw();
+      this.draw();
     });
   }
-  drawScoreView() {
-    const {state,result}=this.getModel(),selected=result.data[state.selected],person=this.config.mode==='person',isTrue=this.config.mode==='true',study=this.scoreView==='study';
-    const key=study?'x':'z',otherKey=study?'z':'x',axisName=study?'Study':'Sleep',otherName=study?'Sleep':'Study';
-    this.root.querySelector('h3').textContent=`${axisName}–score view: ${isTrue?'true relationship':'fitted line'}`;
-    const held=person?selected[otherKey]:result.data.reduce((sum,d)=>sum+d[otherKey],0)/result.data.length;
-    const coefficients=isTrue?{a:result.model.b0,b1:result.model.b1,b2:result.model.b2}:result.full;
-    const slope=study?coefficients.b1:coefficients.b2,otherSlope=study?coefficients.b2:coefficients.b1;
-    const fitted=value=>coefficients.a+slope*value+otherSlope*held;
-    const truth=value=>result.model.b0+(study?result.model.b1:result.model.b2)*value+(study?result.model.b2:result.model.b1)*held;
-    const lo=person?Math.max(0,selected[key]-.35):study?0:4,hi=person?selected[key]+1.2:study?8:10;
-    const data=person?result.data.filter(d=>d.x>=Math.max(0,selected.x-.35)&&d.x<=selected.x+1.2&&d.z>=selected.z-.35&&d.z<=selected.z+1.2):result.data;
-    const scores=[...data.map(d=>d.y),fitted(lo),fitted(hi),...(this.showTrue?[truth(lo),truth(hi)]:[])];
-    const tickSize=person?1:10,low=Math.floor((Math.min(...scores)-1)/tickSize)*tickSize,high=Math.ceil((Math.max(...scores)+1)/tickSize)*tickSize;
-    const width=this.canvas.clientWidth,height=this.canvas.clientHeight;if(!width||!height)return;
-    const dpr=window.devicePixelRatio||1,c=this.ctx;this.canvas.width=width*dpr;this.canvas.height=height*dpr;c.scale(dpr,dpr);
-    const bounds={x:(hi-lo)/2,xCenter:(hi+lo)/2,z:1,y:(high-low)/2,center:(high+low)/2};
-    const project=(x,y)=>projectPoint(x,0,y,this.view,bounds,width,height,1),labels=[];
-    const label=(source,p,col=C.ink,dx=0,dy=0)=>labels.push(`<span class="plot-label" style="left:${clamp(p.x+dx,65,width-65)}px;top:${clamp(p.y+dy,20,height-20)}px;color:${col}">${tex(source)}</span>`);
-    const segment=(a,b,col,weight=1,dash=[])=>{const p=project(...a),q=project(...b);c.beginPath();c.moveTo(p.x,p.y);c.lineTo(q.x,q.y);c.strokeStyle=col;c.lineWidth=weight;c.setLineDash(dash);c.stroke();c.setLineDash([]);};
-    c.save();c.beginPath();c.rect(4,4,width-8,height-8);c.clip();
-    c.font='14px Georgia, serif';c.fillStyle='#6b665d';
-    for(let x=Math.ceil(lo);x<=hi;x+=person?1:2){segment([x,low],[x,high],'#e8e4dc');const p=project(x,low);c.textAlign='center';c.fillText(String(x),p.x,p.y+20);}
-    for(let i=0;i<=5;i++){const y=low+i*(high-low)/5;segment([lo,y],[hi,y],'#e8e4dc');const p=project(lo,y);c.textAlign='right';c.fillText(Number(y.toFixed(1)).toString(),p.x-12,p.y+4);}c.textAlign='left';
-    this.axes=[{key:'x',start:project(lo,low),end:project(hi,low)},{key:'y',start:project(lo,low),end:project(lo,high)}];
-    segment([lo,low],[hi,low],'#918b7e',1.5);segment([lo,low],[lo,high],'#918b7e',1.5);
-    label(`\\text{${axisName} hours}`,project(hi,low),C.ink,15,38);label('\\text{Test score}',project(lo,high),C.ink,0,-18);
-    segment([lo,fitted(lo)],[hi,fitted(hi)],isTrue?C.error:C.plane,2.7);
-    if(this.showTrue)segment([lo,truth(lo)],[hi,truth(hi)],C.error,2.5,[6,4]);
-    this.points=data.map(d=>({...project(d[key],d.y),id:d.id,z:d.z}));
-    this.points.forEach(p=>{const highlight=person&&p.id===state.selected;c.globalAlpha=highlight?1:person?.16:.55;c.fillStyle=highlight?C.residual:color(p.z);c.beginPath();c.arc(p.x,p.y,highlight?6:3.6,0,2*Math.PI);c.fill();});c.globalAlpha=1;
-    if(person){
-      segment([selected[key],selected.fullPrediction],[selected[key],selected.y],C.residual,3);
-      label('\\hat e_{1i}='+fmt(selected.fullResidual),project(selected[key],(selected.fullPrediction+selected.y)/2),C.residual,55,0);
-      const from=project(selected[key],selected.fullPrediction),to=project(selected[key]+1,selected.fullPrediction+slope),angle=Math.atan2(to.y-from.y,to.x-from.x);
-      segment([selected[key],selected.fullPrediction],[selected[key]+1,selected.fullPrediction+slope],study?C.study:C.sleep,2.3);
-      c.beginPath();c.moveTo(to.x,to.y);c.lineTo(to.x-8*Math.cos(angle-.4),to.y-8*Math.sin(angle-.4));c.lineTo(to.x-8*Math.cos(angle+.4),to.y-8*Math.sin(angle+.4));c.closePath();c.fillStyle=study?C.study:C.sleep;c.fill();
-      label(`\\hat\\beta_${study?1:2}=${fmt(slope)}`,to,study?C.study:C.sleep,-30,-20);
-    }
-    c.restore();this.root.querySelector('.plot-labels').innerHTML=labels.join('');
-    const legend=[[isTrue?C.error:C.plane,`${isTrue?'True line':'Fitted line'}: ${axisName.toLowerCase()} slope ${fmt(slope)}`],...(isTrue?[[C.plane,`${data.length} students (including noise)`]]:[]),...(person?[[C.residual,'Selected student and residual']]:[]),...(this.showTrue?[[C.error,'True relationship (dashed)']]:[])];
-    this.root.querySelector('.legend').innerHTML=legend.map(([col,t])=>`<span><i class="swatch" style="background:${col}"></i>${t}</span>`).join('');
-    this.root.querySelector('.plot-hint').textContent=`${otherName} is held at ${fmt(held)} hours (${person?'this student’s value':'the sample average'}) for the ${isTrue?'true':'fitted'} line. Dots show observed scores. Reset view restores the 3D plane.`;
-    this.canvas.setAttribute('aria-label',`${axisName}–score view. ${isTrue?'True':'Fitted'} line holding ${otherName.toLowerCase()} at ${fmt(held)} hours. Arrow keys move the view; R restores the 3D plane.`);
-  }
   draw() {
-    if(this.scoreView)return this.drawScoreView();
     this.root.querySelector('h3').textContent=this.config.title;
     this.canvas.setAttribute('aria-label',`${this.config.title}. Arrow keys move the view; R resets it.`);
     const {state,result}=this.getModel(), data=result.data, model=result.model, config=this.config, c=this.ctx;
