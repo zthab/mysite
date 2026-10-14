@@ -41,5 +41,5 @@ const lambda1=P/c1,lambda2=P/((1+rho)*c2);
 close(lambda2/lambda1,R);close(-lambda1+lambda2*A/(2*Math.sqrt(K)),0);
 close(-lambda1+lambda2*phi*P*(-a),0);close(1/a,(-phi)*P*R);
 const html=readFileSync('teaching/social-cost-of-carbon/index.html','utf8'),ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
-for(const [,path] of html.matchAll(/(?:src|href)="([^"#:]+)"/g)){if(!path.startsWith('http'))assert.ok(existsSync('teaching/social-cost-of-carbon/'+path),`Missing asset ${path}`);}
+for(const [,path] of html.matchAll(/(?:src|href)="([^"#:]+)"/g)){if(!path.startsWith('http'))assert.ok(existsSync('teaching/social-cost-of-carbon/'+path.split('?')[0]),`Missing asset ${path}`);}
 console.log('Passed: utility derivatives and log limit, marginal-utility ratios, exact Ramsey compounding, country units and aggregation, income scaling, sensitivity directions, and HTML assets.');

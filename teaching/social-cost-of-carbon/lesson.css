@@ -112,3 +112,12 @@ main>h1+section{padding-top:1.1rem}
 .site-header{padding:2rem 1rem 1.75rem}.site-header .site-title{font-size:1.35rem;letter-spacing:.2em;margin:0 0 1rem}
 .lesson-back{font-size:.85rem;margin:0 0 1.2rem}.carbon-lesson>h1+section{padding-top:1.1rem}
 @media(max-width:760px){.site-nav{gap:.6rem 1.4rem}}
+
+/* Make the four-step roadmap and the two Euler routes easy to follow. */
+.planner-roadmap .roadmap-copy{border:1px solid var(--border);background:var(--warm);padding:1.1rem 1.25rem}
+.roadmap-decision,.roadmap-solve{display:block;margin-top:.4rem}.roadmap-decision{padding-left:.6rem}.roadmap-solve{margin-top:.65rem}
+.scc-baseline{font-size:.88rem;margin-top:1rem;margin-bottom:0}
+.mitigation-route{color:var(--emissions)}.capital-route{color:var(--returns)}
+.ruby-cloud img,.ruby-scene img,.ruby-function-heading img,.juno-portrait img,.prize-photo img{border:0;outline:0;box-shadow:none}
+.ruby-population{border:0}
+@media(max-width:800px){.planner-roadmap .roadmap-copy{padding:1rem}.roadmap-decision{padding-left:0}}

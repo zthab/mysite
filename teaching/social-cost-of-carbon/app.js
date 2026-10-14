@@ -47,9 +47,8 @@ function renderUtility(){
 
 }
 function renderDiscount(){
-  const r=ramseyRate(state.rho/100,state.eta,state.g/100),rd=state.k/100,approx=state.rho/100+state.eta*state.g/100,chosen=state.method==='prescriptive'?r:rd,R=discountFactor(chosen,state.years);
+  const r=ramseyRate(state.rho/100,state.eta,state.g/100),rd=state.k/100,chosen=state.method==='prescriptive'?r:rd,R=discountFactor(chosen,state.years);
   math('discount-equation',state.method==='prescriptive'?String.raw`r=(1+\rho)(1+g)^\eta-1=${C('r',fixed(r*100,3)+String.raw`\%`)},\qquad R_T=(1+r)^{-T}=${C('R',fixed(R,4))}.`:String.raw`f'(K)=1+${fixed(rd,4)}=${C('capital',fixed(1+rd,4))},\qquad R_T=[f'(K)]^{-T}=${C('R',fixed(R,4))}.`);
-  prose('discount-reading',`With the ${state.method} approach, $100 of damage in ${state.years} years is worth ${money(100*R)} today. ${state.method==='prescriptive'?`The exact Ramsey rate is ${pct(r)}; the approximation <span data-tex="\\rho+\\eta g"></span> gives ${pct(approx)}.`:`The selected real net capital return is ${pct(rd)}; its gross payoff is ${fixed(1+rd,4)} future dollars per dollar invested.`}${chosen<0?' The selected consumption discount rate is negative, so the future dollar receives a weight above one.':''}`);
   const top=Math.max(1,discountFactor(r,150),discountFactor(rd,150))*1.05;
   const ticks=top<=1.051?[0,.25,.5,.75,1]:[1,...Array.from({length:5},(_,i)=>top*i/4).filter(v=>Math.abs(v-1)>top*.06)].sort((a,b)=>a-b);
   graph('discount-plot',{series:[{points:sample(0,150,t=>discountFactor(r,t)),color:colors.R},{points:sample(0,150,t=>discountFactor(rd,t)),color:colors.R,dash:true}],xmin:0,xmax:150,ymin:0,ymax:top,yTicks:ticks,legend:[{label:'Prescriptive',color:colors.R},{label:'Descriptive',color:colors.R,dash:true}],xLabel:'Years until climate damage occurs',yLabel:'Value today of $1 damage ($)',marker:{x:state.years,y:R,color:colors.R},yFormat:y=>fmt(y,2),summary:`Discount factors over time. Solid: prescriptive annual rate ${pct(r)}. Dashed: descriptive annual net return ${pct(rd)}. At ${state.years} years, the selected factor is ${fixed(R,4)}.`});
@@ -64,16 +63,12 @@ function renderCountries(){
   $('scc-poor-spared').textContent=money(comparison.spared.scc)+' per tonne';
   $('poor-country-reading').textContent=`${poorest.name} has the lowest future consumption in the table: ${money(poorest.consumption*1000)} per person. Its current damage is ${money(poorest.damageDollars)} of future consumption per tonne. The comparison sets only that country's damage slope to zero; all other inputs stay fixed.`;
   prose('poor-country-difference',`Removing that damage lowers the SCC by <strong>${money(comparison.difference)} per tonne</strong>. The contribution removed is its future dollar damage, ${money(poorest.damageDollars)}, multiplied by its consumption weight, <span data-tex="(${fmt(state.payer)}/${fmt(poorest.consumption)})^\\eta=${fixed(poorest.weight,3)}"></span>, and the time-preference factor, ${fixed(calc.timeFactor,4)}.`);
-  $('scc-value').textContent=money(calc.scc);
   $('country-results').innerHTML=calc.rows.map(c=>`<tr><th scope="row">${c.name}</th><td>${money(c.damageDollars)}</td><td class="weight">${fixed(c.weight,3)}</td><td class="preference-value">${fixed(calc.timeFactor,3)}</td><td title="${fmt(c.contribution,6)} dollars per tonne">${money(c.contribution)}</td></tr>`).join('');
   $('country-total').innerHTML=`<tr><th>Total</th><td>${money(calc.rawDamages)}</td><td colspan="2">Sum of the contributions →</td><td>${money(calc.scc)}</td></tr>`;
   const first=calc.rows[0];math('country-worked',String.raw`\text{Ruby's country: }(${fmt(first.population)}\times10^6)(${C('phi',fmt(first.damage))}\times10^{-6})\left(\frac{${fmt(state.payer)}}{${fmt(first.consumption)}}\right)^\eta(1+\rho)^{-T}=${fmt(first.contribution)}\;\$/\text{tonne}.`);
-  $('country-reading').textContent=`The three countries lose ${money(calc.rawDamages)} of future consumption per tonne in total. After consumption weighting and time preference, the SCC is ${money(calc.scc)} in the payer's current dollars. Changing the payer's income changes the unit of valuation and the marginal utility of the consumption sacrificed today; it does not change the physical damage slopes.`;
   graph('eta-plot',{series:[{points:sample(0,4,eta=>countryCalculation(state.countries,state.payer,eta,state.rho/100,state.years).scc)}],xmin:0,xmax:4,ymin:0,xLabel:'Utility curvature η',yLabel:'SCC ($/tonne)',yFormat:y=>money(y),marker:{x:state.eta,y:calc.scc},summary:`Global SCC sensitivity to eta, holding country incomes and damages fixed. Current eta ${state.eta}, SCC ${money(calc.scc)}.`});
   graph('rho-plot',{series:[{points:sample(0,3,rho=>countryCalculation(state.countries,state.payer,state.eta,rho/100,state.years).scc)}],xmin:0,xmax:3,ymin:0,xLabel:'Annual time preference ρ (%)',yLabel:'SCC ($/tonne)',yFormat:y=>money(y),marker:{x:state.rho,y:calc.scc},summary:`Global SCC sensitivity to pure time preference. Current rho ${state.rho} percent and SCC ${money(calc.scc)}.`});
-  const delta=.01,up=countryCalculation(state.countries,state.payer,Math.min(4,state.eta+delta),state.rho/100,state.years).scc,down=countryCalculation(state.countries,state.payer,Math.max(0,state.eta-delta),state.rho/100,state.years).scc;
-  const direction=Math.abs(up-down)<1e-7?'leaves the SCC unchanged':up>down?'raises the SCC':'lowers the SCC';
-  prose('sensitivity-reading',`At these country inputs, increasing <span data-tex="\\eta"></span> a little ${direction}. Increasing <span data-tex="\\rho"></span> lowers the SCC when damages are positive and arrive in the future. The horizon is ${state.years} years, and the current pure utility time factor is ${fixed(calc.timeFactor,4)}.`);
+
 }
 function syncControls(){
   document.querySelectorAll('[data-param]').forEach(el=>{if(document.activeElement!==el)el.value=state[el.dataset.param];});
@@ -91,9 +86,6 @@ document.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('clic
   const action=el.dataset.action;
   if(action.startsWith('eta-'))state.eta={zero:0,one:1}[action.slice(4)];
   else if(action==='match-returns')state.k=Math.round(ramseyRate(state.rho/100,state.eta,state.g/100)*100/.05)*.05;
-  else if(action==='equal-incomes')state.countries.forEach(c=>c.consumption=state.payer);
-  else if(action==='restore-countries')state.countries=defaults().countries;
-  else if(action==='spare-poorest'){const {poorestIndex}=poorestRecipientComparison(state.countries,state.payer,state.eta,state.rho/100,state.years);state.countries[poorestIndex].damage=0;}
   render();
 }));
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100);});
