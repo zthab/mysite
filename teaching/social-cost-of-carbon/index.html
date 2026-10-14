@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Social cost of carbon · Zahra Thabet</title>
+  <meta name="description" content="Work through utility, marginal utility, Ramsey discounting, and cross-country carbon damages with interactive plots and calculations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../styles.css"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css"><link rel="stylesheet" href="lesson.css">
+  <script type="module" src="app.js"></script>
+<meta property="og:title" content="Social cost of carbon · Zahra Thabet"><meta property="og:description" content="An interactive lesson on utility, discounting, and global climate damages."><meta property="og:url" content="https://zahrathabet.com/teaching/social-cost-of-carbon/"><meta property="og:image" content="https://zahrathabet.com/og-image.png"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://zahrathabet.com/teaching/social-cost-of-carbon/"></head>
+<body>
+<header class="site-header">
+    <div class="header-content">
+      <h1 class="site-title"><a href="../../index.html">Zahra Thabet</a></h1>
+      <nav class="site-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../../about.html">About</a>
+        <a href="../../teaching.html" class="active" aria-current="page">Teaching</a>
+        <a href="../../resources.html">Resources</a>
+        <a href="../../zahra_thabet_cv.pdf">CV</a>
+      </nav>
+    </div>
+  </header>
+  <main class="carbon-lesson">
+  <p class="lesson-back"><a href="../../teaching.html">← Teaching</a></p><h1>Social cost of carbon</h1>
+  <section id="utility" class="lesson-section">
+    <h2>1. What does “utility” mean?</h2>
+    <p class="definition"><strong><a href="https://en.wikipedia.org/wiki/Utility#Cardinal">Utility</a> describes how much well-being Ruby gets from consumption ($), measured in utils.</strong> Her utility function, <span data-tex="u(c)"></span>, translates that amount into utils.</p>
+    <h3>Consumption <span data-tex="c"></span>, utility, marginal utility, and <span data-tex="\eta"></span></h3>
+    <ul class="definitions">
+      <li><strong>Consumption, <span data-tex="c"></span></strong>: the dollar value of goods and services Ruby uses over a year, such as food and housing.<ul class="definition-units"><li><strong>Units:</strong> dollars</li></ul></li>
+      <li><strong>Utility, <span data-tex="u(c)"></span></strong>: the utils Ruby gets from her consumption.<ul class="definition-units"><li><strong>Units:</strong> utils</li><li>Depends on <span data-tex="c"></span></li></ul></li>
+      <li><strong>Marginal utility, <span data-tex="u'(c)=du(c)/dc"></span></strong>: the additional utils from a small increase in consumption, per dollar; the slope of her utility function at <span data-tex="c"></span>. <ul class="definition-units"><li><strong>Units:</strong> utils per dollar. </li><li>Depends on <span data-tex="c"></span>. (Think about this; important to really understand)</li></ul></li>
+      </ul>
+    <div class="explanation utility-function" aria-labelledby="ruby-function-title">
+      <div class="ruby-function-heading"><img src="assets/ruby.png" alt="Ruby beside her utility function" width="747" height="1007"><div><h3 id="ruby-function-title">This is Ruby’s isoelastic utility function</h3><p>Let <span data-tex="c_0=\$10{,}000"></span> be a common reference consumption. We measure her utility in utils using:</p></div></div>
+      <div class="math" data-tex="u(c)=\begin{cases}\dfrac{(c/c_0)^{1-\eta}-1}{1-\eta},&amp;\eta\ne1,\\[6pt]\ln(c/c_0),&amp;\eta=1.\end{cases}"></div>
+      <div class="curvature-definition"><p class="definition"><strong>Curvature, <span data-tex="\eta"></span></strong> (eta): how strongly marginal utility falls as consumption rises.</p><ul><li>A 1% increase in consumption lowers marginal utility by approximately <span data-tex="\eta"></span> percent.</li><li><strong>Example (<span data-tex="\eta=1"></span>):</strong> increasing Ruby’s consumption from $20,000 to $20,200 lowers the utils from her next dollar by about 1%.</li><li><strong>Example (<span data-tex="\eta=0"></span>):</strong> Ruby derives the same utils from her next dollar at $20,000 and $20,200 of consumption.</li></ul></div>
+    <details class="marginal-utility-derivation"><summary>Deriving marginal utility</summary><p>Marginal utility tells us the utility gained or lost when consumption changes. </p>
+      <div class="math" data-tex="\begin{aligned}\frac{du(c)}{dc}&amp;=\frac{1}{c_0}\left(\frac{c}{c_0}\right)^{-\eta},\\[18pt]\ln\!\left(\frac{du(c)}{dc}\right)&amp;=-\ln c_0-\eta\ln\!\left(\frac{c}{c_0}\right)\quad\text{(taking logs)},\\[18pt]\frac{d\ln\!\left(du(c)/dc\right)}{d\ln c}&amp;=-\eta,\\[18pt]-\frac{d\ln\!\left(du(c)/dc\right)}{d\ln c}&amp;=\eta.\end{aligned}"></div>
+      <p>So <span data-tex="\eta"></span> is the percentage fall in marginal utility for a 1% rise in consumption.</p>
+      <p>For a small consumption change, <span data-tex="\Delta u\approx\frac{du(c)}{dc}\,\Delta c"></span>.</p>
+    </details></div>
+    <div class="controls two">
+      <div class="control eta"><label for="eta-utility">Utility curvature <span data-tex="\eta"></span><output for="eta-utility" data-value="eta"></output></label><input id="eta-utility" data-param="eta" type="range" min="0" max="4" step="0.05" value="1"><p class="small">Shared with the discounting and country calculations below.</p></div>
+      <div class="control"><label for="consumption">Ruby’s consumption <span data-tex="c"></span><output for="consumption" data-value="c"></output></label><input id="consumption" data-param="c" type="range" min="5" max="100" step="1" value="40"><p class="small">Dollars per person per year.</p></div>
+    </div>
+    <div class="actions utility-presets" aria-label="Special utility functions"><button data-action="eta-zero"><span data-tex="\eta=0"></span> · Linear utility: constant marginal utility</button><button data-action="eta-one"><span data-tex="\eta=1"></span> · Log utility: doubling consumption halves marginal utility</button></div>
+    <div class="figure-grid">
+      <figure><figcaption>Utility: utils from the whole budget</figcaption><div id="utility-plot" class="plot"></div></figure>
+      <figure><figcaption>Marginal utility: utils per extra $1,000</figcaption><div id="mu-plot" class="plot"></div></figure>
+    </div>
+    <p><strong>Why this matters for carbon:</strong> avoiding climate damage preserves consumption. To decide how much to spend on mitigation, the planner compares the utils preserved by preventing those losses with the utils people give up when they pay for mitigation. A dollar can buy different amounts of utility at different consumption levels, so comparing dollar amounts alone can miss that tradeoff. <b>(This paragraph is important; really try to read and understand this; it's why we are doing this whole exercise).</b></p>
+    <div class="explanation" aria-labelledby="utility-ratio-title">
+      <h3 id="utility-ratio-title">From utility to dollars</h3>
+      <div class="juno-benefit-intro"><figure class="juno-portrait"><img src="assets/juno-standing.png" alt="Juno, a black dog with a pink collar, standing and looking at the camera" width="1124" height="936"><figcaption>Juno</figcaption></figure><p>Suppose a policy causes a small consumption gain for Juno and Ruby pays for it. They both have the same utility function and same <span data-tex="\eta"></span>. <br><br>How many dollars could Ruby give up while the policy’s utility benefit still covers its utility cost? </p></div>
+      <ul class="definitions">
+        <li><strong>Benefit</strong>: Juno gets  <span data-tex="d"></span> dollars of consumption, which gives her approximately <span data-tex="u'(c_J)d"></span> utils.</li>
+        <li><strong>Cost</strong>: Ruby gives up <span data-tex="x"></span> dollars of consumption, which takes away approximately <span data-tex="u'(c_R)x"></span> of her utils.</li>
+      </ul>
+      <p>Set the benefit equal to the cost and solve for Ruby’s maximum payment:</p>
+      <div class="math" data-tex="\begin{aligned}\underbrace{u'(c_R)x}_{\text{Ruby's utility cost}}&amp;=\underbrace{u'(c_J)d}_{\text{Juno's utility benefit}},\\[12pt]x&amp;=\frac{u'(c_J)d}{u'(c_R)}\\[12pt]&amp;=\underbrace{\frac{u'(c_J)}{u'(c_R)}}_{\substack{\text{dollars Ruby can give up}\\\text{per dollar preserved for Juno}}}d.\end{aligned}"></div>
+      <p>With our isoelastic utility function, the amount Ruby can give up per dollar of Juno’s consumption preserved is:</p>
+      <div class="math" data-tex="\frac{u'(c_J)}{u'(c_R)}=\frac{c_0^{-1}(c_J/c_0)^{-\eta}}{c_0^{-1}(c_R/c_0)^{-\eta}}=\left(\frac{c_R}{c_J}\right)^\eta."></div>
+    <p><strong>Example:</strong> with log utility, <span data-tex="\eta=1"></span>, let Juno consume $20,000 and Ruby $40,000. A marginal dollar for Juno produces twice the utils of a marginal dollar for Ruby. Preserving $1 of Juno’s consumption therefore offsets the utility cost of Ruby giving up about $2:</p>
+      <div class="math" data-tex="x=\frac{1/20{,}000}{1/40{,}000}\times\$1=\$2."></div>
+      </div>
+  </section>
+  <section id="derive" class="lesson-section">
+    <h2>2. Deriving the social cost of carbon with a representative consumer</h2>
+    <figure class="ruby-population" aria-labelledby="ruby-population-caption">
+      <div class="ruby-cloud" role="img" aria-label="A cloud of identical Rubys representing the population"><img class="ruby-copy ruby-copy-0" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-1" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-2" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-3" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-4" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-5" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-6" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-7" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-8" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-9" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-10" src="assets/ruby.png" alt="" width="747" height="1007">
+<img class="ruby-copy ruby-copy-11" src="assets/ruby.png" alt="" width="747" height="1007"></div>
+      <figcaption id="ruby-population-caption">This is our population of <span data-tex="P"></span> Rubys</figcaption>
+      <p>We are going to take one Ruby from this population and follow her through two periods, one year apart. Every Ruby has the same income, spending, consumption, and emissions.</p>
+    </figure>
+    <figure class="ruby-timeline" aria-labelledby="ruby-caption">
+      <figcaption id="ruby-caption">Ruby’s budget today → Ruby’s consumption tomorrow</figcaption>
+      <div class="ruby-periods">
+        <article class="ruby-period">
+          <h3><span class="period-tag">Period 1</span> Earn, allocate, emit</h3>
+          <div class="ruby-scene"><img src="assets/ruby.png" alt="Ruby, a golden Labrador, representing a person in period one" width="747" height="1007"><div class="ruby-income"><span>Income today</span><strong data-tex="y_1"></strong></div></div>
+          <p class="ruby-flow">Ruby divides her income three ways:</p>
+          <dl class="ruby-budget">
+            <div><dt>Capital spending</dt><dd><strong data-tex="K"></strong><span>Invest now for a payoff next period.</span></dd></div>
+            <div><dt>Mitigation spending</dt><dd><strong data-tex="M"></strong><span>Spend now to reduce emissions.</span></dd></div>
+            <div class="ruby-emissions"><dt>Emissions today</dt><dd><strong data-tex="e(M)"></strong><span>Tonnes emitted by Ruby. More mitigation means fewer tonnes: <span data-tex="e'(M)&lt;0"></span>.</span></dd></div>
+            <div><dt>Consumption today</dt><dd><strong data-tex="c_1=y_1-K-M"></strong><span><br></span></dd></div>
+          </dl>
+          <div class="math ruby-equation" data-tex="\underbrace{y_1}_{\text{income}}=\underbrace{K}_{\text{capital}}+\underbrace{M}_{\text{mitigation}}+\underbrace{c_1}_{\text{consumption}}"></div>
+        </article>
+        <article class="ruby-period">
+          <h3><span class="period-tag">Period 2</span> Receive the payoff and damage</h3>
+          <div class="ruby-scene"><img src="assets/ruby.png" alt="The same Ruby, representing a person in period two" width="747" height="1007"><div class="ruby-income"><span>Income tomorrow</span><strong data-tex="y_2"></strong></div></div>
+          <p class="ruby-flow">Her earlier choices change her outcomes tomorrow:</p>
+          <dl class="ruby-budget">
+            <div><dt>Capital pays off</dt><dd><strong data-tex="+f(K)"></strong></dd></div>
+            <div><dt>Emissions <br>(depends on mitigation)</dt><dd><strong data-tex="M\uparrow\;\Rightarrow\;e(M)\downarrow"></strong><span><span data-tex="e(M)"></span> is Ruby’s period-1 emissions in tonnes of CO₂ after spending <span data-tex="M"></span> on mitigation.</span></dd></div>
+            <div class="ruby-damage"><dt>Damages from all emissions to 1 Ruby</dt><dd><strong data-tex="\phi Pe(M)&lt;0"></strong><span>Her own emissions are <span data-tex="e(M)"></span>; everyone together emits <span data-tex="Pe(M)"></span>. <span data-tex="\phi Pe(M)"></span> is a negative dollar amount: the loss of Ruby’s consumption in period 2. </span></dd></div>
+            <div><dt>Consumption tomorrow</dt><dd><strong data-tex="c_2=y_2+f(K)+\phi Pe(M)"></strong></dd></div>
+          </dl>
+          <div class="math ruby-equation" data-tex="y_2=c_2-f(K)-\phi Pe(M)"></div>
+        </article>
+      </div>
+    </figure>
+    <div class="explanation emissions-explanation">
+      <h3>Why do total emissions enter Ruby’s personal budget?</h3>
+      <p>Ruby personally emits <span data-tex="e(M)"></span> tonnes. There are <span data-tex="P"></span> identical Rubys, so together they emit <span data-tex="Pe(M)"></span> tonnes. In the equation for consumption tomorrow above, you can see that all emissions enter her budget constraint. This is to show that Ruby is affected by everyone’s emissions, not just her own. We scale all emissions by <span data-tex="\phi"></span> (phi).</p>
+      <p class="definition"><strong>The damage slope, <span data-tex="\phi&lt;0"></span></strong>: the change in <em>one Ruby’s</em> future consumption dollars caused by one extra tonne emitted by the <em>whole population</em> <span data-tex="P"></span>.</p>
+      <p><strong>Example:</strong> if <span data-tex="\phi=-\$0.01"></span> per Ruby per total tonne and the population emits 1,000 tonnes, Ruby loses $10. Every other Ruby also loses $10. <br><br></p>
+      <div class="math" data-tex="c_2=y_2+f(K)+(-0.01)(1{,}000)=y_2+f(K)-10."></div>
+      </div>
+    <h3 id="social-planner-title">Social planner problem: maximizing society’s welfare under externalities</h3>
+    <div class="planner-roadmap" id="planner-roadmap"><div class="roadmap-copy"><p><b>Roadmap</b>: It's easy to get lost in the next section; here I lay out what our goal is.</p><p>Ruby’s welfare tomorrow depends on everyone’s emissions, so emissions create an externality. We would like to understand how much society should be willing to pay today to avoid one additional tonne. The social planner counts the damage to every Ruby and chooses capital and mitigation to maximize total welfare. At the first-best allocation, the cost of avoiding the next tonne equals the value, in today’s consumption dollars, of the damages it prevents. That marginal damage value is the social cost of carbon.</p><p>We will do the following:</p><ol><li>Write the social welfare problem (total welfare subject to budget constraints).</li><li>We make two <b>intertemporal</b> decisions: 1) give up consumption today to invest and get a capital return tomorrow and 2) give up consumption today to mitigate and avoid climate damages tomorrow. We will solve the social welfare problem for capital and mitigation Euler conditions, which tell us what these tradeoffs are in math.</li><li>Apply a discount factor to value the benefits tomorrow in step 2 in today's dollars.</li><li>Express the mitigation tradeoff per tonne: divide the current-dollar cost and benefit of a small increase in mitigation by the additional tonnes of CO₂ it avoids.</li></ol><p class="roadmap-goal">Voilà! The <b>social cost of carbon</b> is the benefit of avoiding one additional tonne of CO₂, expressed in today’s consumption dollars. At the first-best allocation, the planner mitigates until the cost of avoiding the next tonne equals that benefit: marginal abatement cost = SCC.</p></div><figure class="prize-photo"><img src="assets/eye-on-prize.jpeg" alt="Ruby and Juno keeping their eyes on a treat" width="768" height="1024"><figcaption>It's important to keep our eye on the prize</figcaption></figure></div>
+    <p>Ruby gets <span data-tex="u(c_1)"></span> utils now and <span data-tex="u(c_2)"></span> next period. <br><br>The social planner weighs the future utils by pure time preference and adds the same two-period utility across all <span data-tex="P"></span> Rubys:</p>
+    <div class="math" data-tex="W=P\left[u(c_1)+\frac{u(c_2)}{1+\rho}\right]."></div>
+    <ul class="definitions">
+      <li><strong>Pure time preference, <span data-tex="\rho"></span></strong>: how much less weight the planner gives a util simply because it arrives later.</li>
+      <li><strong>Examples</strong>: with <span data-tex="\rho=0"></span>, the two utils have equal weight. With <span data-tex="\rho=0.005"></span>, tomorrow’s util has about <span data-tex="0.995"></span> of today’s weight.</li>
+      </ul>
+    <div class="math planner-optimization" data-tex="\begin{aligned}\max_{c_1,c_2,K,M}\quad &amp;P\left[u(c_1)+\frac{u(c_2)}{1+\rho}\right]\\[20pt]\text{subject to}\quad &amp;c_1=y_1-K-M,\\[12pt]&amp;c_2=y_2+f(K)+\phi Pe(M),\\[12pt]&amp;c_1,c_2&gt;0,\quad K,M\ge0.\end{aligned}"></div>
+    <p>Because all Rubys are identical, these per-person constraints are equivalent to every Ruby’s budget holding.</p>
+    <details id="solve-planner" class="welfare-derivation"><summary>Solving the social welfare function: full Lagrangian derivation</summary>
+    <p>The Lagrangian combines the welfare objective with the two budget constraints. The multipliers <span data-tex="\lambda_1"></span> and <span data-tex="\lambda_2"></span> will tell us the utility value of an extra dollar in each budget. For how Lagrangians work, see <a href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf#page=229">Boyd and Vandenberghe, Section 5.1</a> (Boyd teaches EE364a at Stanford!), and <a href="https://sites.math.northwestern.edu/~clark/285/2006-07/handouts/lagrange-econ.pdf">Northwestern’s Economic Applications of Lagrange Multipliers</a>.</p>
+    <div class="math" data-tex="\begin{aligned}\mathcal L={}&amp;P\left[u(c_1)+\frac{u(c_2)}{1+\rho}\right]\\[10pt]&amp;+\lambda_1(y_1-K-M-c_1)\\[10pt]&amp;+\lambda_2\bigl(y_2+f(K)+\phi Pe(M)-c_2\bigr).\end{aligned}"></div>
+    <p>At an interior optimum, set the derivatives to zero:</p>
+    <div class="foc-set" aria-label="Numbered first-order conditions">
+      <div id="eq-1" class="math" data-tex="\frac{\partial\mathcal L}{\partial c_1}=Pu'(c_1)-\lambda_1=0\quad\Rightarrow\quad\lambda_1=Pu'(c_1).\tag{1}"></div>
+      <div id="eq-2" class="math" data-tex="\frac{\partial\mathcal L}{\partial c_2}=\frac{Pu'(c_2)}{1+\rho}-\lambda_2=0\quad\Rightarrow\quad\lambda_2=\frac{Pu'(c_2)}{1+\rho}.\tag{2}"></div>
+      <div id="eq-3" class="math" data-tex="\frac{\partial\mathcal L}{\partial K}=-\lambda_1+\lambda_2f'(K)=0.\tag{3}"></div>
+      <div id="eq-4" class="math" data-tex="\frac{\partial\mathcal L}{\partial M}=-\lambda_1+\lambda_2\phi Pe'(M)=0.\tag{4}"></div>
+    </div>
+    <p>Equation (1) says an extra dollar in each Ruby’s current budget is worth <span data-tex="u'(c_1)"></span> utils per Ruby, or <span data-tex="Pu'(c_1)"></span> utils across the population. That is <span data-tex="\lambda_1"></span>. Equation (2) gives the same value for an extra dollar in each future budget, with future utils discounted; that is <span data-tex="\lambda_2"></span>.</p>
+    <p><strong>Capital:</strong> insert the values of <span data-tex="\lambda_1"></span> from (1) and <span data-tex="\lambda_2"></span> from (2) into (3). Then move the current utility cost to the other side and divide by <span data-tex="P"></span>:</p>
+    <div class="math" data-tex="\begin{aligned}0&amp;=-\lambda_1+\lambda_2f'(K)\\[12pt]&amp;=-Pu'(c_1)+\frac{Pu'(c_2)}{1+\rho}f'(K),\\[12pt]Pu'(c_1)&amp;=\frac{Pu'(c_2)}{1+\rho}f'(K),\\[12pt]u'(c_1)&amp;=\frac{u'(c_2)}{1+\rho}f'(K).\end{aligned}"></div>
+    <p><strong>Mitigation:</strong> insert the same values from (1) and (2) into (4), then perform the same rearrangement:</p>
+    <div class="math" data-tex="\begin{aligned}0&amp;=-\lambda_1+\lambda_2\phi Pe'(M)\\[12pt]&amp;=-Pu'(c_1)+\frac{Pu'(c_2)}{1+\rho}\phi Pe'(M),\\[12pt]Pu'(c_1)&amp;=\frac{Pu'(c_2)}{1+\rho}\phi Pe'(M),\\[16pt]\underbrace{u'(c_1)}_{\text{utils lost per dollar spent}}&amp;=\frac{u'(c_2)}{1+\rho}\underbrace{\phi Pe'(M)}_{\text{future dollars gained per dollar spent}}.\end{aligned}"></div>
+    <p>Why is the left side a cost? Increasing mitigation by <span data-tex="\Delta M"></span> takes <span data-tex="\Delta M"></span> dollars from current consumption. The utility change is approximately <span data-tex="-u'(c_1)\Delta M"></span>. Thus, <span data-tex="u'(c_1)"></span> is the utils lost <em>per extra dollar spent</em>.</p>
+    <p>On the right, every Ruby’s extra spending lowers total emissions by <span data-tex="Pe'(M)\Delta M&lt;0"></span>. Multiplying by the negative damage slope turns that emissions reduction into a <em>gain</em> in Ruby’s future consumption:</p>
+    <div class="math" data-tex="\begin{aligned}\Delta c_2&amp;\approx\phi Pe'(M)\Delta M&gt;0,\\[12pt]\text{future utility gain}&amp;\approx u'(c_2)\Delta c_2.\end{aligned}"></div>
+
+    </details>
+    <h4>The two Euler conditions</h4>
+    <p>At an interior optimum, the utility cost of the next dollar spent equals its discounted utility benefit. Capital earns a future payoff; mitigation prevents future consumption losses.</p>
+    <p class="definition"><strong>Capital Euler equation:</strong> compare consuming a dollar today with investing it for tomorrow.</p>
+    <div id="capital-euler" class="math" data-tex="u'(c_1)=\frac{u'(c_2)}{1+\rho}f'(K).\tag{5}"></div>
+    <p class="definition"><strong>Mitigation Euler equation:</strong> compare consuming a dollar today with spending it to reduce emissions.</p>
+    <div id="mitigation-euler" class="math" data-tex="u'(c_1)=\frac{u'(c_2)}{1+\rho}\phi Pe'(M).\tag{6}"></div>
+    <h3 id="discount-factor-routes">What is a future consumption gain worth today?</h3>
+    <p>We can obtain the discount factor from either the mitigation Euler equation or the capital Euler equation. Below we work through both.</p><p>Use the “from utility to dollars” calculation from Section 1, now with a future benefit. Suppose Ruby gains <span data-tex="d"></span> dollars next period. How many dollars, <span data-tex="x"></span>, could she give up today for the same contribution to welfare?</p>
+    <ul class="definitions">
+      <li><strong>Current utility cost</strong>: approximately <span data-tex="u'(c_1)x"></span> utils.</li>
+      <li><strong>Future utility benefit</strong>: approximately <span data-tex="u'(c_2)d"></span> utils, with weight <span data-tex="1/(1+\rho)"></span>.</li>
+    </ul>
+    <p>Equate the weighted benefit and current cost, then solve for today’s dollar value:</p>
+    <div id="eq-7" class="math" data-tex="\begin{aligned}u'(c_1)x&amp;=\frac{u'(c_2)d}{1+\rho},\\[12pt]x&amp;=\underbrace{\frac{u'(c_2)}{(1+\rho)u'(c_1)}}_{R}\,d,\\[12pt]R&amp;\equiv\frac{x}{d}=\frac{1}{1+\rho}\frac{u'(c_2)}{u'(c_1)}.\end{aligned}\tag{7}"></div>
+    <p class="definition"><strong><span data-tex="R"></span> is the discount factor:</strong> multiply a future dollar gain by <span data-tex="R"></span> to get its value in current consumption dollars. For example, if <span data-tex="R=0.8"></span>, preserving $10 of future consumption is worth $8 today. We divide by <span data-tex="u'(c_1)"></span> because each current dollar corresponds to that many utils.</p>
+    <p class="definition"><strong>Consumption discount rate, <span data-tex="r"></span></strong>: a rate that expresses the same discount factor as <span data-tex="R=1/(1+r)"></span> for one period. Equivalently, <span data-tex="r=1/R-1"></span>.</p><h4>From the mitigation Euler equation</h4>
+    <p>In mitigation equation (6), the future dollar gain from the next dollar spent is <span data-tex="\phi Pe'(M)"></span>. Divide both sides of (6) by <span data-tex="u'(c_1)"></span>, and use the discount factor from (7):</p>
+    <div id="eq-8" class="math" data-tex="\begin{aligned}\frac{u'(c_1)}{u'(c_1)}&amp;=\frac{u'(c_2)}{(1+\rho)u'(c_1)}\phi Pe'(M),\\[12pt]1&amp;=R\,\phi Pe'(M).\end{aligned}\tag{8}"></div>
+    <p>The left side becomes <span data-tex="u'(c_1)/u'(c_1)=1"></span>: a dollar spent on mitigation costs one dollar of current consumption. The right side is the future consumption protected by that extra dollar, <span data-tex="\phi Pe'(M)"></span>, multiplied by the discount factor <span data-tex="R"></span>. Equation (8) says that at the interior optimum, the next $1 spent protects consumption worth $1 today. If the benefit exceeds $1, the planner wants more mitigation; if it falls below $1, the planner wants less.</p>
+    <h4 id="capital-factor-title">From the capital Euler equation</h4>
+    <p>Equation (5) offers a second way to obtain the discount factor. Investing $1 gives up $1 of current consumption and returns <span data-tex="f'(K)"></span> future dollars. Divide its utility cost and benefit by today’s marginal utility:</p>
+    <div class="math" data-tex="\begin{aligned}u'(c_1)&amp;=\frac{u'(c_2)}{1+\rho}f'(K),\\[12pt]1&amp;=R\,f'(K),\\[12pt]R&amp;=\frac{1}{f'(K)}=\frac{1}{1+r},\\[12pt]f'(K)&amp;=1+r.\end{aligned}"></div>
+    <p class="definition"><span data-tex="f'(K)"></span> is the <em>gross</em> marginal payoff: future dollars returned by an extra current dollar of capital, including the principal. Its net return is <span data-tex="f'(K)-1"></span>. At an interior optimum in this model, that net return equals the consumption discount rate.</p>
+    <h4>From a dollar of mitigation to one tonne avoided</h4>
+    <p>The SCC is measured in <strong>dollars per tonne</strong>. Equation (8) instead measures the benefit of an extra dollar of spending. To express that condition per tonne, divide by the number of tonnes the extra dollar avoids.</p>
+    <p>Because <span data-tex="e'(M)&lt;0"></span>, the positive number <span data-tex="-e'(M)"></span> is tonnes avoided per extra dollar. <br><br>Because <span data-tex="\phi&lt;0"></span>, the positive number <span data-tex="-\phi"></span> is dollars lost by one Ruby per extra total tonne. Rewrite (8) using those positive quantities, then divide:</p>
+    <div id="eq-9" class="math" data-tex="\begin{aligned}1&amp;=R\underbrace{(-\phi)P}_{\text{future damage: dollars per tonne}}\underbrace{[-e'(M)]}_{\text{tonnes avoided per dollar}},\\[18pt]\underbrace{\frac{1}{-e'(M)}}_{\mathrm{MAC}:\ \text{dollars per tonne}}&amp;=\underbrace{(-\phi)P\,R}_{\mathrm{SCC}:\ \text{dollars per tonne}}.\end{aligned}\tag{9}"></div>
+    <p>If $1 avoids 0.02 tonnes, avoiding a full tonne costs <span data-tex="1/0.02=\$50"></span>. Across all <span data-tex="P"></span> Rubys, spending and tonnes avoided both multiply by <span data-tex="P"></span>, so the cost per tonne is unchanged. On the benefit side, a tonne harms every Ruby, so its future dollar damage is <span data-tex="(-\phi)P"></span>.</p>
+    <p>The SCC in (9) is future damage per tonne multiplied by the discount factor <span data-tex="R"></span>. Section 3 lets you choose the inputs used to calculate that factor.</p>
+    <div class="controls"><div class="control response"><label for="abatement-slope">Tonnes avoided by one extra dollar, <span data-tex="-e'(M)"></span><output for="abatement-slope" data-value="slope"></output></label><input id="abatement-slope" data-param="slope" type="range" min="0.002" max="0.05" step="0.001" value="0.02"></div></div>
+    <div id="mac-example" class="math"></div>
+  </section>
+  <section id="discounting" class="lesson-section">
+    <h2>3. Choosing the discount factor</h2>
+    <p>The problem now is to choose a value for the discount factor. Section 2 gave us <span data-tex="\mathrm{SCC}=(-\phi)P\,R"></span>. Its final factor, <span data-tex="R"></span>, determines what future damage is worth in current consumption dollars:</p>
+    <div class="math" data-tex="R=\frac{1}{1+\rho}\frac{u'(c_2)}{u'(c_1)}=\frac{1}{1+r}."></div>
+    <ul class="definitions"><li><strong>Pure time preference, <span data-tex="\rho"></span></strong>: the rate at which we discount future utils.</li><li><strong>Consumption discount rate, <span data-tex="r"></span></strong>: the rate at which we discount future consumption dollars.</li><li><strong>Discount factor, <span data-tex="R"></span></strong>: the multiplier applied to the future dollars. For one year, it is <span data-tex="1/(1+r)"></span>.</li></ul>
+    <h4 id="ramsey-equation-title">Use the Ramsey equation to calculate that discount factor</h4>
+    <p class="definition"><strong>The Ramsey equation</strong> turns the discount factor we just derived into a consumption discount rate. We need a forecast of future consumption to evaluate <span data-tex="u'(c_2)/u'(c_1)"></span>. Consumption growth supplies that forecast (recall the assumption we made in class about consumption growth).</p>
+    <p class="definition"><strong>Consumption growth, <span data-tex="g"></span></strong>: the proportional change in consumption between periods, <span data-tex="g=(c_2-c_1)/c_1"></span>. </p>
+    <p>Substitute this definition and the marginal utility formula into the discount factor:</p>
+    <div class="math" data-tex="\begin{aligned}R&amp;=\frac{1}{1+\rho}\frac{c_0^{-1}(c_2/c_0)^{-\eta}}{c_0^{-1}(c_1/c_0)^{-\eta}}\\[18pt]&amp;=\frac{1}{1+\rho}\left(\frac{c_2}{c_1}\right)^{-\eta}\\[18pt]&amp;=\frac{(1+g)^{-\eta}}{1+\rho}=\frac{1}{1+r},\\[18pt]1+r&amp;=(1+\rho)(1+g)^\eta,\\[18pt]\ln(1+r)&amp;=\ln(1+\rho)+\eta\ln(1+g).\end{aligned}"></div>
+    <div class="equation-with-note"><aside class="equation-note">For small rates, <span data-tex="\ln(1+z)\approx z"></span>.</aside><div class="math" data-tex="r=(1+\rho)(1+g)^\eta-1\quad\approx\quad\underbrace{\rho}_{\text{pure time preference}}+\underbrace{\eta g}_{\text{consumption growth adjustment}}."></div></div>
+    <h3>Prescriptive or descriptive: where do the inputs come from?</h3>
+    <p>In this calculator, <strong>prescriptive</strong> means choosing <span data-tex="\rho"></span> and <span data-tex="\eta"></span>, forecasting growth, and calculating <span data-tex="r"></span> with the Ramsey equation. <strong>Descriptive</strong> means using an observed capital return directly. Those are the two routes derived above. A descriptive approach can also calibrate Ramsey parameters to market evidence, as EPA did in 2023; the descriptive button here uses the direct-return route.</p>
+    <div class="table-scroll"><table class="rates"><thead><tr><th>Approach</th><th>What you need to know</th><th>Discount factor over <span data-tex="T"></span> years</th></tr></thead><tbody><tr><th>Prescriptive</th><td>Chosen time preference <span data-tex="\rho"></span>, utility curvature <span data-tex="\eta"></span>, and a forecast of consumption growth <span data-tex="g"></span>.</td><td><span data-tex="R_T=(1+\rho)^{-T}(1+g)^{-\eta T}"></span></td></tr><tr><th>Descriptive</th><td>An observed real capital return, entered directly as <span data-tex="f'(K)-1"></span>.</td><td><span data-tex="R_T=[f'(K)]^{-T}"></span></td></tr></tbody></table></div>
+    <h3>Why might the two calculations disagree?</h3>
+    <p>The equality follows from an <em>optimal capital choice</em>, rather than from the definitions alone. If <span data-tex="Rf'(K)&gt;1"></span>, the future utility gain from the next dollar of capital exceeds its current utility cost, so the planner wants more investment. If <span data-tex="Rf'(K)&lt;1"></span>, the planner wants less. With freely adjustable capital, an interior optimum brings the two into equality.</p>
+    <p>Our sliders let you choose returns, preferences, and growth independently, so they can describe an allocation that fails that condition.</p>
+    <div class="controls three">
+      <div class="control preference"><label for="rho-discount">Annual utility discount rate <span data-tex="\rho"></span><output data-value="rho"></output></label><input id="rho-discount" data-param="rho" type="range" min="0" max="3" step="0.05" value="0.5"></div>
+      <div class="control growth"><label for="growth">Annual consumption growth <span data-tex="g"></span><output data-value="g"></output></label><input id="growth" data-param="g" type="range" min="-1" max="4" step="0.05" value="1.5"></div>
+      <div class="control eta"><label for="eta-discount">Utility curvature <span data-tex="\eta"></span><output data-value="eta"></output></label><input id="eta-discount" data-param="eta" type="range" min="0" max="4" step="0.05" value="1"></div>
+      <div class="control returns"><label for="capital-return">Annual net capital return <span data-tex="f'(K)-1"></span><output data-value="k"></output></label><input id="capital-return" data-param="k" type="range" min="-5" max="25" step="0.05" value="3"></div>
+      <div class="control"><label for="horizon-discount">Years until damages, <span data-tex="T"></span><output data-value="years"></output></label><input id="horizon-discount" data-param="years" type="range" min="1" max="150" step="1" value="50"></div>
+    </div>
+    <div class="actions method-switch" aria-label="Choose discounting approach"><button data-method="prescriptive" aria-pressed="true">Prescriptive calculation</button><button data-method="descriptive" aria-pressed="false">Descriptive calculation</button><button data-action="match-returns">Make the returns consistent</button></div>
+    <div id="discount-equation" class="math highlighted"></div><p id="discount-reading" class="reading" aria-live="polite"></p>
+    <figure><figcaption>What is $1 of future climate damage worth today?</figcaption><div id="discount-plot" class="plot"></div></figure>
+  </section>
+  <section id="countries" class="lesson-section">
+    <h2>4. Does the tonne damage a poorer country?</h2>
+    <p><strong>Hold the future dollar damage fixed.</strong> If it falls on a person with less consumption, preventing it saves more utils when <span data-tex="\eta&gt;0"></span>. The SCC is therefore higher when the same dollar damage falls on a poorer recipient. If that country is not damaged, its contribution is zero. At <span data-tex="\eta=0"></span>, recipient consumption does not affect the weight.</p>
+    <p>Ruby’s country pays for mitigation today. Juno’s country and Zahra’s country also experience damages.</p>
+    <p>Country <span data-tex="i"></span> pays today, while emissions affect people in every country <span data-tex="j"></span>. The government values everyone's utility equally, but cannot make transfers abroad. Its SCC is expressed in <em>country <span data-tex="i"></span>’s current consumption dollars</em>.</p>
+    <div class="math" data-tex="c_{j2}=y_{j2}+f(K_j)+\phi_j\sum_k P_k e(M_k),\qquad \frac{\partial c_{j2}}{\partial M_i}=\phi_jP_i e'(M_i)."></div>
+    <details><summary>Show the global first-order condition</summary><div class="math" data-tex="0=-P_i u'(c_{i1})+\frac{P_i e'(M_i)}{1+\rho}\sum_j P_j u'(c_{j2})\phi_j."></div><p>Cancel <span data-tex="P_i"></span>, divide by today's marginal utility, and divide by <span data-tex="-e'(M_i)"></span>. The emitter's population cancels because it scales both spending and tonnes avoided. Each recipient's population remains because it counts people affected.</p><div class="math" data-tex="\frac{-1}{e'(M_i)}=\frac{1}{1+\rho}\sum_j(-\phi_j)P_j\frac{u'(c_{j2})}{u'(c_{i1})}."></div></details>
+    <p>For the calculator, damages arrive in one future year, <span data-tex="T"></span> years from today. Annual pure time preference compounds; the consumption weight uses today's payer consumption and each country's consumption in that future year:</p>
+    <div class="math highlighted" data-tex="\mathrm{SCC}_i=\underbrace{(1+\rho)^{-T}}_{\text{weight on future utility}}\sum_j\underbrace{(-\phi_j)P_j}_{\text{future dollars lost in }j}\underbrace{\left(\frac{c_{i1}}{c_{jT}}\right)^\eta}_{\text{marginal-utility weight}}."></div>
+    <div class="controls four">
+      <div class="control"><label for="payer">Payer's consumption today <span data-tex="c_{i1}"></span><output data-value="payer"></output></label><input id="payer" data-param="payer" type="range" min="5" max="120" step="1" value="40"></div>
+      <div class="control eta"><label for="eta-countries">Utility curvature <span data-tex="\eta"></span><output data-value="eta"></output></label><input id="eta-countries" data-param="eta" type="range" min="0" max="4" step="0.05" value="1"></div>
+      <div class="control preference"><label for="rho-countries">Annual time preference <span data-tex="\rho"></span><output data-value="rho"></output></label><input id="rho-countries" data-param="rho" type="range" min="0" max="3" step="0.05" value="0.5"></div>
+      <div class="control"><label for="horizon-countries">Years until damages, <span data-tex="T"></span><output data-value="years"></output></label><input id="horizon-countries" data-param="years" type="range" min="1" max="150" step="1" value="50"></div>
+    </div>
+    <div class="table-scroll"><table class="country-inputs"><caption>Edit the future recipients</caption><thead><tr><th>Recipient</th><th>Population<br>million people</th><th>Future consumption<br>$1,000 per person</th><th><span data-tex="-\phi_j"></span><br>µ$/person/tonne</th></tr></thead><tbody id="country-inputs"></tbody></table></div>
+    <div class="actions"><button data-action="spare-poorest">Remove damage to the poorest recipient</button><button data-action="equal-incomes">Set future incomes equal to the payer's</button><button data-action="restore-countries">Restore illustrative countries</button></div>
+    <div class="explanation country-comparison" aria-labelledby="poor-country-title">
+      <h3 id="poor-country-title">Compare: the poorest recipient is damaged or spared</h3>
+      <p id="poor-country-reading" aria-live="polite"></p>
+      <div class="comparison-pair"><div><p>With the current damage table</p><p class="budget" id="scc-poor-damaged"></p></div><div><p>With no damage to the poorest recipient</p><p class="budget" id="scc-poor-spared"></p></div></div>
+      <p id="poor-country-difference"></p>
+      </div>
+    <div class="scc-result"><span>Global SCC in the payer's current dollars</span><strong id="scc-value" aria-live="polite"></strong><span>per tonne of CO₂</span></div>
+    <div class="table-scroll"><table class="country-results"><caption>Build the total one country at a time</caption><thead><tr><th>Recipient</th><th>Future damages<br><span data-tex="(-\phi_j)P_j"></span></th><th>Consumption weight<br><span data-tex="(c_{i1}/c_{jT})^\eta"></span></th><th>Utility time factor<br><span data-tex="(1+\rho)^{-T}"></span></th><th>Contribution to SCC</th></tr></thead><tbody id="country-results"></tbody><tfoot id="country-total"></tfoot></table></div>
+    <div id="country-worked" class="math"></div><p id="country-reading" class="reading"></p>
+    </section>
+  <section id="sensitivity" class="lesson-section">
+    <h2>5. Which assumptions move the SCC? </h2>
+    <p>These plots hold the country table, payer consumption, and horizon fixed. The left varies curvature; the right varies pure time preference. A larger <span data-tex="\eta"></span> raises the weight on recipients poorer than the payer today and lowers the weight on richer recipients. Its effect on the total depends on where the damages occur.</p>
+    <div class="figure-grid"><figure><figcaption>SCC as <span data-tex="\eta"></span> changes</figcaption><div id="eta-plot" class="plot"></div></figure><figure><figcaption>SCC as <span data-tex="\rho"></span> changes</figcaption><div id="rho-plot" class="plot"></div></figure></div>
+    <p id="sensitivity-reading" class="reading"></p>
+  </section>
+  <section id="readings" class="lesson-section">
+    <h2>6. Papers that calculate the SCC—and papers that use it</h2>
+    <p>If it's of interest, here are real papers that either calculate the social cost of carbon, or use a measure of it to characterize the costs and benefits of policies that affect carbon.</p>
+    <div class="reading-groups">
+      <div>
+        <h3>1. Calculating the SCC</h3>
+        <ol class="paper-list">
+          <li><h4><a href="https://academic.oup.com/qje/article-abstract/141/2/889/8490467">The Macroeconomic Impact of Climate Change: Global Versus Local Temperature</a></h4>
+            <p class="paper-citation">Adrien Bilal and Diego R. Känzig (2026) · <em>The Quarterly Journal of Economics</em> · <a href="https://www.nber.org/papers/w32450">Working paper</a></p>
+            <p>Estimates the response of world output to global temperature changes, then uses those estimates in a growth model to calculate climate damages and the SCC. Shows how measuring global rather than local temperature changes affects the damage calculation.</p>
+          </li>
+          <li><h4><a href="https://www.nature.com/articles/s41586-022-05224-9">Comprehensive evidence implies a higher social cost of CO₂</a></h4>
+            <p class="paper-citation">Rennert et al. (2022) · <em>Nature</em></p>
+            <p>Builds the GIVE model with updated socioeconomic projections, climate responses, damage estimates, and discounting. A direct example of assembling the ingredients behind an SCC estimate.</p>
+          </li>
+          <li><h4><a href="https://www.nature.com/articles/s41558-018-0282-y">Country-level social cost of carbon</a></h4>
+            <p class="paper-citation">Ricke, Drouet, Caldeira, and Tavoni (2018) · <em>Nature Climate Change</em></p>
+            <p>Estimates the country contributions to global marginal climate damages. Connects to our country table by showing how unevenly the damages from one tonne are distributed.</p>
+          </li>
+          <li><h4><a href="https://doi.org/10.1073/pnas.2312030121">Policies, projections, and the social cost of carbon: Results from the DICE-2023 model</a></h4>
+            <p class="paper-citation">Barrage and Nordhaus (2024) · <em>PNAS</em> · <a href="https://economics.yale.edu/sites/default/files/2024-03/barrage-nordhaus-2024-policies-projections-and-the-social-cost-of-carbon-results-from-the-dice-2023-model.pdf">Open PDF</a></p>
+            <p>Calculates the SCC and optimal climate policies in a model linking capital, output, emissions, climate, and damages. Extends the logic of Ruby’s two-period planner problem to a longer horizon.</p>
+          </li>
+          <li><h4><a href="https://doi.org/10.3982/ECTA10217">Optimal Taxes on Fossil Fuel in General Equilibrium</a></h4>
+            <p class="paper-citation">Golosov, Hassler, Krusell, and Tsyvinski (2014) · <em>Econometrica</em> · <a href="https://www.nber.org/papers/w17348">Working paper</a></p>
+            <p>Derives an analytical formula for marginal carbon damage and the optimal tax under the model’s assumptions. Shows explicitly how discounting and the persistence of atmospheric carbon enter the calculation.</p>
+          </li>
+        </ol>
+      </div>
+      <div>
+        <h3>2. Using the SCC as an externality</h3>
+        <ol class="paper-list">
+          <li><h4><a href="https://www.aeaweb.org/articles?id=10.1257/aer.20231304">When Do “Nudges” Increase Welfare?</a></h4>
+            <p class="paper-citation">Hunt Allcott, Daniel Cohen, William Morrison, and Dmitry Taubinsky (2025) · <em>American Economic Review</em> · <a href="https://www.nber.org/papers/w30740">Working paper</a></p>
+            <p>Uses the SCC to value the climate externality from additional gasoline use in its fuel-economy-label experiment. Then evaluates how nudges affect welfare when consumer mistakes, taxes, and market prices also matter.</p>
+          </li>
+          <li><h4><a href="https://www.aeaweb.org/articles?id=10.1257/aer.20250166">A Welfare Analysis of Policies Impacting Climate Change</a></h4>
+            <p class="paper-citation">Hahn, Hendren, Metcalfe, and Sprung-Keyser (2026) · <em>American Economic Review</em> · <a href="https://www.nber.org/papers/w32728">Working paper</a></p>
+            </li>
+          <li><h4><a href="https://www.nber.org/system/files/working_papers/w31803/w31803.pdf">An Economic View of Corporate Social Impact</a></h4><p class="paper-citation">Allcott, Montanari, Ozaltun, and Tan (2023, revised 2025) · NBER Working Paper 31803</p><p>What would happen to welfare if a firm disappeared? A structural model counts consumers, workers, and substitution to other firms, and uses the SCC to value carbon emissions. A useful example of why a firm’s own emissions do not tell us its full social impact.</p></li>
+          <li><h4><a href="https://www.brookings.edu/articles/economic-implications-of-the-climate-provisions-of-the-inflation-reduction-act/">Economic Implications of the Climate Provisions of the Inflation Reduction Act</a></h4><p class="paper-citation">Bistline, Mehrotra, and Wolfram (2023) · <em>Brookings Papers on Economic Activity</em></p><p>Models how clean-energy incentives change investment and emissions, then compares the costs of reducing emissions with the SCC. Connects the per-tonne benefit derived here to the evaluation of a large subsidy package.</p></li></ol>
+      </div>
+    </div>
+  </section>
+  <footer><p>Based on Chapter 6 of Hunt Allcott's <em>Environmental Economics Lecture Notes</em>.</p></footer>
+</main>
+</body></html>
